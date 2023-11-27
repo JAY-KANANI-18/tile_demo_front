@@ -1,0 +1,141 @@
+<div class="header bg-gradient-skyblue p-3 pb-7 pt-7">
+  <div class="container-fluid">
+    <div class="header">
+      <h1>Search Image</h1>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="bg-aliceblue modal-div">
+    <div class="modal-header">
+      <h4>Service Type</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form
+        role="form"
+        (ngSubmit)="
+        onAdd(fileInput,modal)
+        "
+        name="newForm"
+      >
+
+        <div class="text-center">
+
+          <img *ngIf="selectedImage" [src]="selectedImage " alt="Selected Image" width="50%" height="50%">
+        </div>
+
+        <label for="">Vehicle Image : </label>
+
+        <input
+          class="form-control"
+          name="file"
+          type="file"
+          (change)="onFileSelected($event)"
+
+          #fileInput
+        />
+
+        <span
+          class="errors"
+
+          >*Please enter a value</span
+        >
+   
+    
+        
+        <!-- <span class="errors" *ngIf="errorMsg2" -->
+          <!-- >*File should less then 1MB -->
+        <!-- </span> -->
+
+        <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
+
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn btn-primary my-4"
+          >
+            Add Vehicle
+          </button>
+<!--          
+          <button
+            *ngIf="UpdateActivate"
+            type="button"
+            class="btn btn-danger my-4"
+            (click)="onCancel(modal); "
+          >
+            cancel
+          </button> -->
+        </div>
+      </form>
+    </div>
+ 
+  </div>
+</ng-template>
+
+<div class="container-fluid mt--5">
+  <div class="vehicles">
+    <div class="card-header row ml-0 mr-0">
+      <div class="col-sm-4">
+        <div class="form-control-search d-flex align-items-center">
+          <!-- <input
+            type="search"
+            class="form-control"
+            placeholder="Search"
+            (input)="onSearch($event.target.value)"
+          /> -->
+          <div class="btn-group">
+
+        <input
+          class="form-control"
+          name="file"
+          type="file"
+          formControlName="file"
+          (change)="onFileSelected($event)"
+
+          #fileInput
+        />
+            <button class="btn refresh" (click)="search(fileInput)">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-8 text-right">
+        <button
+          class="btn btn-outline-primary add-dialog"
+          (click)="openModel(content)"
+        >
+          + Add
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="vehicle col-sm-4 pr-0 pl-0 text-center mt-5"
+      *ngFor="let vehicle of Vehicles || allVehicles"
+      (click)="openModel(content)"
+    >
+      <img
+        src="http://localhost:5000/main_carpet/{{  vehicle.image || vehicle   }}"
+        alt="image"
+        width="100%"
+        height="75%"
+      />
+      <hr />
+      <div>{{ vehicle.image || vehicle  }}</div>
+      <div>{{ vehicle.similarity_percentage   || " "  }} </div><p *ngIf="vehicle.similarity_percentage"> %</p>
+      <!-- <button  class="btn btn-success  mt-3 mr-2" (click)="onUpdate(vehicle._id);scrollToTop()">Update</button> -->
+      <!-- <button   class="btn btn-danger mt-3" (click)="onDelete(vehicle._id)">Delete</button> -->
+    </div>
+  </div>
+</div>
+<h3 class="text-center" *ngIf="Vehicles?.length <= 0">No Data Found</h3>

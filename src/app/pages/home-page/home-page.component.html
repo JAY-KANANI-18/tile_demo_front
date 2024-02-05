@@ -2,6 +2,8 @@
   <div class="container-fluid">
     <div class="header">
       <h1>Search Image</h1>
+      <button (click)="logOut()" class="btn btn-danger">LogOut</button>
+
     </div>
   </div>
 </div>
@@ -9,64 +11,45 @@
 <ng-template #content let-modal>
   <div class="bg-aliceblue modal-div">
     <div class="modal-header">
-      <h4>Service Type</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
+      <h4>Add Image</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
 
     <div class="modal-body">
-      <form
-        role="form"
-        (ngSubmit)="
-        onAdd(fileInput,modal)
-        "
-        name="newForm"
-      >
+      <form role="form"  name="vehicleForm"
+        [formGroup]="vehicleForm"
+
+        >
 
         <div class="text-center">
 
           <img *ngIf="selectedImage" [src]="selectedImage " alt="Selected Image" width="50%" height="50%">
         </div>
 
-        <label for="">Vehicle Image : </label>
+        <!-- <div *ngIf="!selectedImage" class="file-container"> -->
+          <div class="text-center">Drag File Here</div>
 
-        <input
-          class="form-control"
-          name="file"
-          type="file"
-          (change)="onFileSelected($event)"
+          <input class="form-control file"  formControlName="file"
+          name="file" type="file" (change)="onFileSelected($event);" #fileInput1 webkitdirectory directory multiple/>
+        <!-- </div> -->
 
-          #fileInput
-        />
 
-        <span
-          class="errors"
 
-          >*Please enter a value</span
-        >
-   
-    
-        
+
+
         <!-- <span class="errors" *ngIf="errorMsg2" -->
-          <!-- >*File should less then 1MB -->
+        <!-- >*File should less then 1MB -->
         <!-- </span> -->
 
         <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
 
-        <div class="text-center">
-          <button
-            type="submit"
-            class="btn btn-primary my-4"
-          >
-            Add Vehicle
+        <div class="text-center" *ngIf="selectedImage">
+          <button type="submit" class="btn btn-primary my-4" (click)='onAdd(fileInput1,modal)'>
+            Add Image
           </button>
-<!--          
+          <!--          
           <button
             *ngIf="UpdateActivate"
             type="button"
@@ -78,64 +61,50 @@
         </div>
       </form>
     </div>
- 
+
   </div>
 </ng-template>
 
+
+<!-- <div class="drop-container" ngxFileDrop
+     (onFileDrop)="dropped($event)">
+  <span class="drop-message">Drop your folder here or click to select.</span>
+
+</div>
+
 <div class="container-fluid mt--5">
   <div class="vehicles">
-    <div class="card-header row ml-0 mr-0">
-      <div class="col-sm-4">
-        <div class="form-control-search d-flex align-items-center">
-          <!-- <input
-            type="search"
-            class="form-control"
-            placeholder="Search"
-            (input)="onSearch($event.target.value)"
-          /> -->
-          <div class="btn-group">
 
-        <input
-          class="form-control"
-          name="file"
-          type="file"
-          formControlName="file"
-          (change)="onFileSelected($event)"
+          <div class="text-center">
 
-          #fileInput
-        />
-            <button class="btn refresh" (click)="search(fileInput)">Search</button>
-          </div>
-        </div>
-      </div>
+            <div class="btn-group">
 
-      <div class="col-sm-8 text-right">
-        <button
-          class="btn btn-outline-primary add-dialog"
-          (click)="openModel(content)"
-        >
-          + Add
-        </button>
-      </div>
+
+              <div class="file-container btn">
+                <span class="text-center">Upload</span>
+      
+                <input class="form-control file1 " name="file" type="file" (change)="onFileSelected($event);" #fileInput />
+              </div>
+              <input type="text" class="search" placeholder="Search name">
+
+              <button class="btn refresh btn-success" (click)="search(fileInput)">Search</button>
+              <button class="btn btn-primary add-dialog" (click)="openModel(content)">
+                + Add
+              </button>
+            </div>
+
+
     </div>
 
-    <div
-      class="vehicle col-sm-4 pr-0 pl-0 text-center mt-5"
-      *ngFor="let vehicle of Vehicles || allVehicles"
-      (click)="openModel(content)"
-    >
-      <img
-        src="http://localhost:5000/main_carpet/{{  vehicle.image || vehicle   }}"
-        alt="image"
-        width="100%"
-        height="75%"
-      />
+    <div class="vehicle col-sm-4 pr-0 pl-0 text-center mt-5" *ngFor="let vehicle of Vehicles || allVehicles"
+      (click)="openModel(content)">
+      <img src="https://imgstockhub.in/main_carpet/{{  vehicle.image || vehicle   }}" alt="image" width="100%"
+        height="75%" />
       <hr />
-      <div>{{ vehicle.image || vehicle  }}</div>
-      <div>{{ vehicle.similarity_percentage   || " "  }} </div><p *ngIf="vehicle.similarity_percentage"> %</p>
-      <!-- <button  class="btn btn-success  mt-3 mr-2" (click)="onUpdate(vehicle._id);scrollToTop()">Update</button> -->
-      <!-- <button   class="btn btn-danger mt-3" (click)="onDelete(vehicle._id)">Delete</button> -->
+      <div>{{ vehicle.image || vehicle }}</div>
+      <div>{{ vehicle.similarity_percentage || " " }} </div>
+      <p *ngIf="vehicle.similarity_percentage"> %</p>
     </div>
   </div>
-</div>
+</div> -->
 <h3 class="text-center" *ngIf="Vehicles?.length <= 0">No Data Found</h3>

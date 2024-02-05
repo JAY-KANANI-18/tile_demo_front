@@ -38,3 +38,47 @@ img {
 .header {
   z-index: -1;
 }
+.file-container1{
+  width:25%;
+  border: 2px solid black
+
+}
+.file-container{
+  width:100%;
+  border: 2px dotted black
+
+}
+.file{
+  opacity: 0;
+  padding: 5rem;
+  width: auto;
+  height: 5rem;
+
+} 
+
+.file1{
+  height: 10%;
+  opacity: 0;
+  width: 2rem;
+  width:100%;
+
+  
+}
+.btn-success{
+  width: 8rem;
+}
+.btn-primary{
+  width: 6rem;
+}
+.search{
+  padding: 0.5rem;
+}
+.drop-container {
+  border: 2px dashed #cccccc;
+  padding: 20px;
+  text-align: center;
+}
+
+.drop-message {
+  font-size: 16px;
+}

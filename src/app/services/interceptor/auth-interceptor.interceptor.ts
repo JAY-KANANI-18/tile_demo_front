@@ -9,22 +9,23 @@ import {
 } from "@angular/common/http";
 import { Observable, catchError, finalize, of, tap, throwError } from "rxjs";
 import { LoadingServiceService } from "../loading-service.service";
-import { PostsService } from "../login.service";
-import { ToastrService } from "ngx-toastr";
+// import { PostsService } from "../login.service";
+// import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   constructor(
     private loadingService: LoadingServiceService,
-    private loginService: PostsService,
-    private toster: ToastrService
+    // private loginService: PostsService,
+    // private toster: ToastrService
   ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    let localtoken = localStorage.getItem("newToken");
+    console.log('inter called');
+    let localtoken = localStorage.getItem("Token") || "";
     // this.loginService.autoLogout();
 
     // request = request.clone({headers:request.headers.set('Authorization',localStorage.getItem('newToken'))})
@@ -34,8 +35,9 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
       this.loadingService.showLoading();
 
     }
+    
     request = request.clone({
-      headers: request.headers.set("Authorization", "Bearer " + localtoken),
+      headers: request.headers.set("token", localtoken),
     });
 
     return next.handle(request).pipe(
@@ -48,7 +50,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           console.log("time to logout");
 
-          this.loginService.logOut();
+          // this.loginService.logOut();
           // this.toster.error('session complete')
         }
 

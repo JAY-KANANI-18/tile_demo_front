@@ -11,24 +11,27 @@ import { Observable } from "rxjs";
 import { PostsService } from "./login.service";
 
 @Injectable({ providedIn: "root" })
-export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router, private postService: PostsService) {}
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router, private postService: PostsService) { }
 
-  canActivate(
+  async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.postService.isAuthenticated().then((authenticated: boolean) => {
-      if (authenticated) {
-        return true;
-      }
-    });
+  ): Promise<boolean> {
+    let res = await this.postService.isAuthenticated()
+    console.log(res);
+    
+    if (res) {
+      // this.router.navigate(['home'])
+
+      return true
+
+    } else {
+      // this.router.navigate(['login'])
+      return false
+
+    }
+
   }
 
-  canActivateChild(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean | UrlTree | Observable<boolean> | Promise<boolean> | boolean {
-    return this.canActivate(route, state);
-  }
 }

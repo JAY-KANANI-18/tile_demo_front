@@ -3,18 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 
 import { RouterModule } from '@angular/router';
+
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { AuthInterceptorInterceptor } from './services/interceptor/auth-interceptor.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
+
    
   ],
   imports: [
@@ -30,9 +33,13 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MdbCarouselModule,
+    NgxFileDropModule,
+    ReactiveFormsModule
     
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,        useClass:AuthInterceptorInterceptor,
+    multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

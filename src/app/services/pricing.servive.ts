@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Router } from "@angular/router";
-import { environment } from "src/app/environments/environment";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class PricingService {
@@ -30,6 +30,11 @@ export class PricingService {
   }
   
   getAllCarpet(){
+    const headers = new HttpHeaders( {
+      'Content-Type': 'application/json',
+      "Referrer-Policy":"strict-origin-when-cross-origin"
+    });
+
     return this.http.get(`${environment.URL}/carpets`);
 
   }
@@ -38,7 +43,7 @@ export class PricingService {
     return this.http.post(`${environment.URL}/test`,data);
 
   }
-  add(data:any){
+    add(data:any){
     return this.http.post(`${environment.URL}/add_carpet`,data);
 
 

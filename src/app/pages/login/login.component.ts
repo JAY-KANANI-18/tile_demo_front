@@ -105,6 +105,7 @@ export class LoginComponent {
 
         if (data.status) {
           console.log("login Successfully");
+          this.loginForm.reset()
 
           const token = localStorage.setItem("Token", (data.data.token).toString());
 
@@ -141,7 +142,15 @@ export class LoginComponent {
 
     this.loginService.signUp(this.signUpForm.value).subscribe({
       next: (data: any) => {
-        this.changeForm()
+
+        if(data.status){
+
+          this.signUpForm.reset()
+
+          this.changeForm()
+        }else{
+          this.error2 =  data.msg
+        }
 
       }, error: (error) => {
         console.log(error);

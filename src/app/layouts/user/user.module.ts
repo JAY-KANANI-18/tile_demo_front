@@ -19,7 +19,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     HomePageComponent
   ],
   imports: [
-    // CommonModule,
+    CommonModule,
     UserRoutingModule,
     NgbModule,
     // BrowserAnimationsModule,

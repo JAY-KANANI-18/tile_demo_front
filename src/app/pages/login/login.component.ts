@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Form, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostsService } from 'src/app/services/login.service';
-
+declare var google: any
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,9 +25,27 @@ export class LoginComponent {
   error2: any = ""
   signUpForm!: FormGroup
   loginForm!: FormGroup
-  constructor(public loginService: PostsService,public router:Router) { }
+  constructor(public loginService: PostsService, public router: Router) { }
 
   ngOnInit() {
+
+
+    google.accounts.id.initialize({
+      client_id: '599245019741-mgja8rohs1jscc4ee1rjmmpq2mv4so9a.apps.googleusercontent.com',
+      callback: (res: any) => {
+        console.log("yyyyy");
+        
+        console.log(res);
+
+      }
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("google-btn"),
+      { locale: "en" }
+    );
+    // google.accounts.id.prompt();
+
+    // google.accounts.id.renderButton(document.getElementById('google-btn'));
 
 
 
@@ -50,6 +68,12 @@ export class LoginComponent {
   }
 
   changeForm() {
+
+    this.loginForm.reset()
+    this.signUpForm.reset()
+
+    this.error1 = ''
+    this.error2 = ''
     if (this.switchCnt) {
       this.switchCnt.nativeElement.classList.add('is-gx');
 
@@ -108,10 +132,11 @@ export class LoginComponent {
           this.loginForm.reset()
 
           const token = localStorage.setItem("Token", (data.data.token).toString());
+          const user = localStorage.setItem("User", (data.data.user).toString());
 
           this.router.navigate(["home"])
 
-        }else{
+        } else {
           this.error1 = data.msg
 
         }
@@ -133,23 +158,23 @@ export class LoginComponent {
 
 
     if (this.signUpForm.get('email')?.invalid) {
-      return this.error1 = "please enter valid email"
+      return this.error2 = "please enter valid email"
     }
     if (this.signUpForm.invalid) {
-      return this.error1 = "please enter required values"
+      return this.error2 = "please enter required values"
     }
 
 
     this.loginService.signUp(this.signUpForm.value).subscribe({
       next: (data: any) => {
 
-        if(data.status){
+        if (data.status) {
 
           this.signUpForm.reset()
 
           this.changeForm()
-        }else{
-          this.error2 =  data.msg
+        } else {
+          this.error2 = data.msg
         }
 
       }, error: (error) => {

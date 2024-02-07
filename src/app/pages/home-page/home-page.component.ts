@@ -12,6 +12,7 @@ import { environment } from "src/environments/environment";
 import * as JSZip from 'jszip';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { PostsService } from "src/app/services/login.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -30,9 +31,13 @@ export class HomePageComponent implements OnInit {
   public allVehicles: any;
   public vehicleForm: any;
   selectedImage: any;
+  public user = localStorage.getItem("User")
 
+ public collection_list:any = []
+ public is_add_collection :any = false
+ public selected_collection:any = ""
 
-
+ public images_list:any = [ ]
 
   private updateId = "";
   selectedFolder: any;
@@ -40,13 +45,16 @@ export class HomePageComponent implements OnInit {
   constructor(
     private pricingService: PricingService,
     private ngbService: NgbModal,
-    private loginSevice:PostsService
+    private loginSevice: PostsService,
+    private router: Router
 
   ) { }
 
   ngOnInit() {
     this.createVehicleTypeForm()
     this.getCarpets();
+    this.get_collections()
+
   }
 
   public droppedFiles: NgxFileDropEntry[] = [];
@@ -195,28 +203,28 @@ export class HomePageComponent implements OnInit {
 
   onAdd(fil: any, modal: any) {
 
-    const zip = new JSZip();
+    // const zip = new JSZip();
 
 
-    const folderName = this.selectedFolder.name;
+    // const folderName = this.selectedFolder.name;
 
     // Create a folder in the zip file
-    const folder: any = zip.folder(folderName);
+    // const folder: any = zip.folder(folderName);
 
-    console.log(folder);
+    // console.log(folder);
 
 
     // Iterate through files in the selected folder and add them to the zip
     // Assuming this.selectedFolder is a File object representing the selected folder
-    const files = Array.from(this.selectedFolder);
+    // const files = Array.from(this.selectedFolder);
 
-    let file: any
-    for (file of files) {
-      // Assuming each file is an image; adjust this condition based on your actual use case
-      // if (file.type.startsWith('image/')) {
-      folder.file(file.name, file);
-      // }
-    }
+    // let file: any
+    // for (file of files) {
+    //   // Assuming each file is an image; adjust this condition based on your actual use case
+    //   // if (file.type.startsWith('image/')) {
+    //   folder.file(file.name, file);
+    //   // }
+    // }
 
 
 
@@ -227,8 +235,10 @@ export class HomePageComponent implements OnInit {
 
     // zip.generateAsync({ type: 'blob' })
     // .then((content) => {
-    //   const formData = new FormData();
-    //   formData.append('zipFile', content, 'folder.zip');
+    // const formData = new FormData();
+    // console.log(fil);
+
+    // formData.append('zipFile', content, 'folder.zip');
 
     //   // Replace 'your-upload-url' with the actual URL of your server endpoint that accepts file uploads
 
@@ -279,21 +289,40 @@ export class HomePageComponent implements OnInit {
 
 
 
-    // const files = fil.files;
+    const files = fil.files;
+    console.log(files);
 
 
 
-    // const formDataObj = new FormData();
+
 
 
     // // if (file.size >= 1000000) {
     // //   this.toster.error('File should be less than 1 Mb')
     // //   return;
     // // }
-    // for (const file of files) {
-    //   formDataObj.append('files', file);
-    // }
-
+    let list = []
+    for (const file of files) {
+      const formDataObj = new FormData();
+      list.push(file.name);
+      
+      // formDataObj.append('files', files[0]);
+      this.pricingService.get_put_url({filename:`${this.user}/${file.name}`}).subscribe({
+        next:(data:any)=>{
+          console.log(data);
+          this.pricingService.save_files(data.presigned_url,file)
+          
+          
+        }
+      })
+    }
+    this.pricingService.add({"files":list,"collection_id":this.selected_collection._id,"user_id":localStorage.getItem("User")}).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+        this.onCollection(this.selected_collection)
+        
+      }
+    })
 
 
 
@@ -327,20 +356,20 @@ export class HomePageComponent implements OnInit {
   onFileSelected(e: any) {
 
     this.selectedFolder = e.target.files;
-    console.log(this.selectedFolder[0].fileEntry);
+    // console.log(this.selectedFolder[0].fileEntry);
 
-    if (this.selectedFolder.length === 1 && this.selectedFolder[0].fileEntry) {
-      console.log('innnnnnnnnn');
+    // if (this.selectedFolder.length === 1 && this.selectedFolder[0].fileEntry) {
+    //   console.log('innnnnnnnnn');
 
-      const fileEntry = this.selectedFolder[0].fileEntry as FileSystemFileEntry;
-      fileEntry.file((file: File) => {
-        // Handle the dropped file
-        this.zipAndSendFolder(file);
-      });
-    }
+    //   const fileEntry = this.selectedFolder[0].fileEntry as FileSystemFileEntry;
+    //   fileEntry.file((file: File) => {
+    //     // Handle the dropped file
+    //     this.zipAndSendFolder(file);
+    //   });
+    // }
 
 
-    console.log(e.target.files);
+    // console.log(e.target.files);
 
     if (e.target.files) {
       let reader = new FileReader()
@@ -361,7 +390,76 @@ export class HomePageComponent implements OnInit {
   // }
 
 
-  logOut(){
+  logOut() {
     this.loginSevice.logOut()
+  }
+  get_collections(){
+    this.pricingService.get_collections({}).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+
+        this.collection_list = data.data[0].collections
+        
+      },error:(error)=>{
+        console.log(error);
+        
+      }
+    })
+  }
+  onColletionAdd(){
+    this.is_add_collection = true
+  }
+  addCollection(name:any){
+    this.pricingService.add_collections({"name":name}).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+        this.get_collections()
+        this.is_add_collection = false
+        
+      }
+    })
+
+  }
+  onCollection(collection:any){
+
+    
+    this.pricingService.get_collection_details({"collection_name":collection.name}).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+        
+        this.selected_collection = data.data
+        this.images_list = data.data?.images || []
+        
+      }
+    })
+
+  }
+  imageDownload(user:any,image:any){
+    this.pricingService.download_image({"filename":user + "/" + image}).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+        // this.router.navigateByUrl()
+        
+
+        const preSignedUrl = data.presigned_grt_url
+
+        // Create a link element
+        const link = document.createElement('a');
+        link.setAttribute('href', preSignedUrl);
+        link.setAttribute('download', ''); // Optional: Specify the file name for download
+        document.body.appendChild(link);
+    
+        // Trigger a click event on the link
+        link.click();
+    
+        // Clean up
+        document.body.removeChild(link);
+
+
+      }
+    })
+  }
+  onother(){
+    window.alert("No , It's Not Working !!!!!  CLICK 'D' IF YOU FIND")
   }
 }

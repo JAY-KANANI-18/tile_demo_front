@@ -41,6 +41,10 @@ export class PricingService {
   }
 
   search(data: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'multipart/form-data',
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
     return this.http.post(`${environment.URL}/test`, data);
 
   }

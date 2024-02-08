@@ -31,16 +31,18 @@ export class HomePageComponent implements OnInit {
   public allVehicles: any;
   public vehicleForm: any;
   selectedImage: any;
-  public user = localStorage.getItem("User")
+  public user = localStorage.getItem("User") || ""
 
- public collection_list:any = []
- public is_add_collection :any = false
- public selected_collection:any = ""
+  public collection_list: any = []
+  public is_add_collection: any = false
+  public selected_collection: any = ""
 
- public images_list:any = [ ]
+  public images_list: any = []
 
   private updateId = "";
   selectedFolder: any;
+
+  public similar_images_list:any = []
 
   constructor(
     private pricingService: PricingService,
@@ -140,6 +142,8 @@ export class HomePageComponent implements OnInit {
 
     const file = files.files[0];
     const formDataObj = new FormData();
+    formDataObj.append("file", file);
+    formDataObj.append("user_id", this.user);
 
     // if (file.size >= 1000000) {
     //   this.toster.error('File should be less than 1 Mb')
@@ -147,7 +151,6 @@ export class HomePageComponent implements OnInit {
     // }
 
     // formDataObj.append("name", this.vehicleForm.value.name);
-    formDataObj.append("file", file);
 
     this.pricingService.search(formDataObj).subscribe({
       next: (data: any) => {
@@ -165,26 +168,29 @@ export class HomePageComponent implements OnInit {
 
         this.Vehicles = []
 
-        for (let each: any = 0; each < convertedArray.length; each++) {
-          //   const element = array[index];
+        
+        // for (let each: any = 0; each < convertedArray.length; each++) {
+        //   //   const element = array[index];
 
-          // }
+        //   // }
 
-          // for (let each in convertedArray) {
+        //   // for (let each in convertedArray) {
 
-          let e = convertedArray[each]
-          let imageUrl: any = e.image;
-          console.log(imageUrl);
-          let pa = imageUrl.split('/')
-          let name: any = pa[pa.length - 1]
-          convertedArray[each].image = name
-          // this.Vehicles.push(name)
+        //   let e = convertedArray[each]
+        //   let imageUrl: any = e.image;
+        //   console.log(imageUrl);
+        //   // let pa = imageUrl.split('/')
+        //   // let name: any = pa[pa.length - 1]
+        //   // convertedArray[each].image = name
+        //   // this.Vehicles.push(name)
 
-        }
-        this.Vehicles = convertedArray
+        // }
+        convertedArray.sort((a:any,b:any)=>{ return b.similarity_percentage - a.similarity_percentage})
+        convertedArray.splice(0,1)
+        this.similar_images_list = convertedArray
         console.log(convertedArray);
-        this.Vehicles.reverse()
-        console.log(this.Vehicles);
+        
+        // console.log(this.Vehicles);
         // this.vehicleForm.reset()
       },
       error: (error) => {
@@ -305,22 +311,22 @@ export class HomePageComponent implements OnInit {
     for (const file of files) {
       const formDataObj = new FormData();
       list.push(file.name);
-      
+
       // formDataObj.append('files', files[0]);
-      this.pricingService.get_put_url({filename:`${this.user}/${file.name}`}).subscribe({
-        next:(data:any)=>{
+      this.pricingService.get_put_url({ filename: `${this.user}/${file.name}` }).subscribe({
+        next: (data: any) => {
           console.log(data);
-          this.pricingService.save_files(data.presigned_url,file)
-          
-          
+          this.pricingService.save_files(data.presigned_url, file)
+
+
         }
       })
     }
-    this.pricingService.add({"files":list,"collection_id":this.selected_collection._id,"user_id":localStorage.getItem("User")}).subscribe({
-      next:(data:any)=>{
+    this.pricingService.add({ "files": list, "collection_id": this.selected_collection._id, "user_id": localStorage.getItem("User") }).subscribe({
+      next: (data: any) => {
         console.log(data);
         this.onCollection(this.selected_collection)
-        
+
       }
     })
 
@@ -393,53 +399,53 @@ export class HomePageComponent implements OnInit {
   logOut() {
     this.loginSevice.logOut()
   }
-  get_collections(){
+  get_collections() {
     this.pricingService.get_collections({}).subscribe({
-      next:(data:any)=>{
+      next: (data: any) => {
         console.log(data);
 
         this.collection_list = data.data[0].collections
-        
-      },error:(error)=>{
+
+      }, error: (error) => {
         console.log(error);
-        
+
       }
     })
   }
-  onColletionAdd(){
+  onColletionAdd() {
     this.is_add_collection = true
   }
-  addCollection(name:any){
-    this.pricingService.add_collections({"name":name}).subscribe({
-      next:(data:any)=>{
+  addCollection(name: any) {
+    this.pricingService.add_collections({ "name": name }).subscribe({
+      next: (data: any) => {
         console.log(data);
         this.get_collections()
         this.is_add_collection = false
-        
+
       }
     })
 
   }
-  onCollection(collection:any){
+  onCollection(collection: any) {
 
-    
-    this.pricingService.get_collection_details({"collection_name":collection.name}).subscribe({
-      next:(data:any)=>{
+
+    this.pricingService.get_collection_details({ "collection_name": collection.name }).subscribe({
+      next: (data: any) => {
         console.log(data);
-        
+
         this.selected_collection = data.data
         this.images_list = data.data?.images || []
-        
+
       }
     })
 
   }
-  imageDownload(user:any,image:any){
-    this.pricingService.download_image({"filename":user + "/" + image}).subscribe({
-      next:(data:any)=>{
+  imageDownload(user: any, image: any) {
+    this.pricingService.download_image({ "filename": user + "/" + image }).subscribe({
+      next: (data: any) => {
         console.log(data);
         // this.router.navigateByUrl()
-        
+
 
         const preSignedUrl = data.presigned_grt_url
 
@@ -448,10 +454,10 @@ export class HomePageComponent implements OnInit {
         link.setAttribute('href', preSignedUrl);
         link.setAttribute('download', ''); // Optional: Specify the file name for download
         document.body.appendChild(link);
-    
+
         // Trigger a click event on the link
         link.click();
-    
+
         // Clean up
         document.body.removeChild(link);
 
@@ -459,7 +465,7 @@ export class HomePageComponent implements OnInit {
       }
     })
   }
-  onother(){
+  onother() {
     window.alert("No , It's Not Working !!!!!  CLICK 'D' IF YOU FIND")
   }
 }

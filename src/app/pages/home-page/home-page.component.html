@@ -43,7 +43,7 @@
         <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
 
         <div class="text-center" *ngIf="selectedImage">
-          <button type="submit" class="btn btn-primary my-4" (click)='onAdd(fileInput1,modal)'>
+          <button type="submit" class="btn btn-primary my-4" (click)='onAdd(fileInput1,modal);modal.dismiss("cross")'>
             Add Image
           </button>
           <!--          
@@ -63,7 +63,7 @@
 </ng-template>
 
 
-<div class="drop-container" ngxFileDrop (onFileDrop)="dropped($event)">
+<!-- <div class="drop-container" ngxFileDrop (onFileDrop)="dropped($event)">
   <span class="drop-message">Drop your folder here or click to select.</span>
 
 </div>
@@ -103,12 +103,12 @@
     </div>
   </div>
 </div>
-<h3 class="text-center" *ngIf="Vehicles?.length <= 0">No Data Found</h3>
+<h3 class="text-center" *ngIf="Vehicles?.length <= 0">No Data Found</h3> -->
 
 
 <div>
   <hr>
-  <h3>Porfoilio</h3>
+  <h3>Porfoilio page</h3>
   <div><button class="btn btn-primary" *ngIf="!is_add_collection" (click)="onColletionAdd()">+ Collection</button>
     <div  *ngIf="is_add_collection">
 
@@ -145,7 +145,7 @@
 
   <div>
     <hr>
-    <h3>Collection</h3>
+    <h3>Collection page</h3>
     <div class="">
       <button class="btn btn-primary add-dialog" (click)="openModel(content)"  *ngIf="selected_collection">
         + Image
@@ -177,6 +177,51 @@
     </div>
 
 
+  </div>
+
+  <div>
+    <hr>
+    <h3>Search page</h3>
+
+    
+    
+    <div class="m-3 p-3 mb-5">
+      <div class="row">
+        <div class="col-md-4">
+          <input class="form-control  " name="file" type="file" (change)="onFileSelected($event);" #fileInput />
+        </div>      
+          <div class="col-md-2">
+            <button class="btn btn-secondary" (click)="search(fileInput)">Search</button>
+          </div>
+      </div>
+      <div class="demo">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-sm-6" *ngFor="let image of similar_images_list">
+              <div class="box" >
+                <img  [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image.image" alt="Williamson Image" width="100%" height="100px">
+                <div class="box-content">
+                  <h3 class="title">{{image?.image}}</h3>
+                  <span class="post">{{image?.similarity_percentage || 0}} %</span>
+                  <span class="post" *ngIf="image?.similarity_percentage >= 95">Best Match</span>
+                  <span class="post" *ngIf="image?.similarity_percentage < 95">Similar Match</span>
+                </div>
+                <ul class="icon">
+                  <li (click)="imageDownload(user,image)"><a ><i class="fa fa-search">D</i></a></li>
+                  <li (click)="onother()"><a ><i class="fa fa-link"></i></a></li>
+                </ul>
+              </div>
+            </div>
+  
+  
+          </div>
+          <div class="text-center p-5" *ngIf="similar_images_list?.length <=0 ">
+            images not found
+          </div>
+        </div>
+      </div>
+      
+    </div>
   </div>
 </div>
 

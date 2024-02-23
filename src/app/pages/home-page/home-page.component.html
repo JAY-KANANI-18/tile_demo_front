@@ -1,4 +1,155 @@
-<div class="header bg-gradient-skyblue p-3 pb-7 pt-7">
+<!-- header section -->
+<!-- <div class="navigation">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container">
+              <img src="./images/search-icon.webp" height="60px">
+              <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                  aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+                      <li class="nav-item" id="items">
+                          <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Dashboard</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Image</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Gallery</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Faq</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Buy</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="#">Videos</a>
+                      </li>
+                  </ul>
+                  <div class="btn mx-3">
+                      <a class="btn wow fadeInUp text-white" rel="nofollow">Login</a>
+                  </div>
+                  <div class="btn">
+                      <a class="btn wow fadeInUp text-white" rel="nofollow">Register</a>
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </div> -->
+
+<div class="main ">
+  <div class="container text-white pb-5 pt-5">
+    <div class="row">
+      <div class="col-md-12 col-sm-6 col-lg-12 text-center pt-5">
+        <h1 class="wow fadeInDown pt-5">Choose Images</h1>
+        <p class="lead  wow fadeIn">Search or Choose your Favourite Design </p>
+      </div>
+      <div class="container mt-5 mb-5 search-mn">
+        <div class="form-group" x-data="{ fileName: '' }">
+          <div class="input-group shadow ">
+            <input class="form-control form-control-lg  search-file " id="formFileLg" type="file" name="file"
+              type="file" (change)="onFileSelected($event);" #fileInput />
+
+            <button type="button" class="btn btn-outline-primary text-white " (click)="search(fileInput)"
+              *ngIf="!is_search_load">Browse</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End search Bar  -->
+
+<!-- image section -->
+<section>
+  <div class="container">
+    <div id="portfolio" class="row mt-5">
+
+      <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 " *ngFor="let image of similar_images_list">
+        <div class="card" style="width: 24rem;">
+          <img class="card-img-top" [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image.image"
+            alt="Card image cap" style="height: 24rem;">
+          <div class="card-body text-center" *ngIf="similar_images_list?.length >0">
+            <img src="./images/free-search-icon-2903-thumb.png"><i class="fw-bold fs-5 mx-2">
+              <h3 class="title">{{image?.image}}</h3>
+              <span class="post">{{image?.similarity_percentage || 0}} %</span>
+            </i>
+          </div>
+
+          <a href="#" class="read"><i class="fa fa-download"></i></a>
+        </div>
+      </div>
+      <div class="text-center p-5" *ngIf="similar_images_list?.length <=0 ">
+        images not found
+      </div>
+      <div *ngIf="is_search_load" class="text-center m-5 p-5">
+        loading .....
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- pagination -->
+
+<!-- <div class="pagignation-main">
+  <nav class="pagination-outer" aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item">
+        <a href="#" class="page-link" aria-label="Previous">
+          <span aria-hidden="true"> <i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item active"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">4</a></li>
+      <li class="page-item"><a class="page-link" href="#">5</a></li>
+      <li class="page-item">
+        <a href="#" class="page-link" aria-label="Next">
+          <span aria-hidden="true"> <i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div> -->
+
+<!-- footer section -->
+
+<footer>
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center">
+      <div class="container-fluid bg-dark pt-3 pb-2">
+        <ul class="footer-links">
+          <li class="footer-text">
+            <a href="#" class="p-1 text-white text-decoration-none mx-2">En</a>
+            <a href="#" class="p-1 text-white text-decoration-none mx-2">Contact Us</a>
+            <a href="#" class="p-1 text-white text-decoration-none mx-2">Help</a>
+            <a href="#" class="p-1 text-white text-decoration-none mx-2">Term & Condition</a>
+            <a href="#" class="p-1 text-white text-decoration-none mx-2"> Image & Photo</a>
+            <a href="#" class="p-1 text-white text-decoration-none">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+<!-- <div class="header bg-gradient-skyblue p-3 pb-7 pt-7">
   <div class="container-fluid">
     <div class="header">
       <h1>Search Image</h1>
@@ -6,7 +157,7 @@
 
     </div>
   </div>
-</div>
+</div> -->
 
 <ng-template #content let-modal>
   <div class="bg-aliceblue modal-div">
@@ -22,39 +173,19 @@
 
         <div class="text-center">
 
-          <!-- <img *ngIf="selectedImage" [src]="selectedImage " alt="Selected Image" width="50%" height="50%"> -->
         </div>
 
-        <!-- <div *ngIf="!selectedImage" class="file-container"> -->
         <div class="text-center">Drag File Here</div>
 
         <input class="form-control file" formControlName="file" name="file" type="file"
           (change)="onFileSelected($event);" #fileInput1 multiple />
-        <!-- </div> -->
 
-
-
-
-
-        <!-- <span class="errors" *ngIf="errorMsg2" -->
-        <!-- >*File should less then 1MB -->
-        <!-- </span> -->
-
-        <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
 
         <div class="text-center" *ngIf="selectedImage">
           <button type="submit" class="btn btn-primary my-4" (click)='onAdd(fileInput1,modal);modal.dismiss("cross")'>
             Add Image
           </button>
-          <!--          
-          <button
-            *ngIf="UpdateActivate"
-            type="button"
-            class="btn btn-danger my-4"
-            (click)="onCancel(modal); "
-          >
-            cancel
-          </button> -->
+
         </div>
       </form>
     </div>
@@ -105,12 +236,12 @@
 </div>
 <h3 class="text-center" *ngIf="Vehicles?.length <= 0">No Data Found</h3> -->
 
-
+<!-- 
 <div>
   <hr>
   <h3>Porfoilio page</h3>
   <div><button class="btn btn-primary" *ngIf="!is_add_collection" (click)="onColletionAdd()">+ Collection</button>
-    <div  *ngIf="is_add_collection">
+    <div *ngIf="is_add_collection">
 
       <input type="text" class="input m-3" placeholder="name" #collectionName>
       <button (click)="addCollection(collectionName.value)">add</button>
@@ -128,7 +259,7 @@
               <span class="post">{{collection?.images?.length || 0}} images</span>
             </div>
             <ul class="icon">
-              <li (click)="onother()"><a ><i class="fa fa-search"></i></a></li>
+              <li (click)="onother()"><a><i class="fa fa-search"></i></a></li>
               <li (click)="onother()"><a><i class="fa fa-link"></i></a></li>
             </ul>
           </div>
@@ -147,7 +278,7 @@
     <hr>
     <h3>Collection page</h3>
     <div class="">
-      <button class="btn btn-primary add-dialog" (click)="openModel(content)"  *ngIf="selected_collection">
+      <button class="btn btn-primary add-dialog" (click)="openModel(content)" *ngIf="selected_collection">
         + Image
       </button>
     </div>
@@ -155,15 +286,15 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">
-            <div class="box" >
-              <img  [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt="Williamson Image" width="100%" height="100px">
+            <div class="box">
+              <img [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt="Williamson Image"
+                width="100%" height="100px">
               <div class="box-content">
                 <h3 class="title">{{image}}</h3>
-                <!-- <span class="post">{{collection?.images?.length || 0}} images</span> -->
               </div>
               <ul class="icon">
-                <li (click)="imageDownload(user,image)"><a ><i class="fa fa-search">D</i></a></li>
-                <li (click)="onother()"><a ><i class="fa fa-link"></i></a></li>
+                <li (click)="imageDownload(user,image)"><a><i class="fa fa-search">D</i></a></li>
+                <li (click)="onother()"><a><i class="fa fa-link"></i></a></li>
               </ul>
             </div>
           </div>
@@ -183,23 +314,24 @@
     <hr>
     <h3>Search page</h3>
 
-    
-    
+
+
     <div class="m-3 p-3 mb-5">
       <div class="row">
         <div class="col-md-4">
           <input class="form-control  " name="file" type="file" (change)="onFileSelected($event);" #fileInput />
-        </div>      
-          <div class="col-md-2">
-            <button class="btn btn-secondary" (click)="search(fileInput)">Search</button>
-          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-secondary" (click)="search(fileInput)" *ngIf="!is_search_load">Search</button>
+        </div>
       </div>
-      <div class="demo">
+      <div class="demo" *ngIf="!is_search_load">
         <div class="container">
           <div class="row">
             <div class="col-md-4 col-sm-6" *ngFor="let image of similar_images_list">
-              <div class="box" >
-                <img  [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image.image" alt="Williamson Image" width="100%" height="100px">
+              <div class="box">
+                <img [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image.image"
+                  alt="Williamson Image" width="100%" height="100px">
                 <div class="box-content">
                   <h3 class="title">{{image?.image}}</h3>
                   <span class="post">{{image?.similarity_percentage || 0}} %</span>
@@ -207,21 +339,23 @@
                   <span class="post" *ngIf="image?.similarity_percentage < 95">Similar Match</span>
                 </div>
                 <ul class="icon">
-                  <li (click)="imageDownload(user,image)"><a ><i class="fa fa-search">D</i></a></li>
-                  <li (click)="onother()"><a ><i class="fa fa-link"></i></a></li>
+                  <li (click)="imageDownload(user,image)"><a><i class="fa fa-search">D</i></a></li>
+                  <li (click)="onother()"><a><i class="fa fa-link"></i></a></li>
                 </ul>
               </div>
             </div>
-  
-  
+
+
           </div>
           <div class="text-center p-5" *ngIf="similar_images_list?.length <=0 ">
             images not found
           </div>
         </div>
       </div>
-      
+      <div *ngIf="is_search_load" class="text-center m-5 p-5">
+        loading .....
+      </div>
+
     </div>
   </div>
-</div>
-
+</div> -->

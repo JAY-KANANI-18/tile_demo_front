@@ -1,0 +1,91 @@
+<div>
+    <hr>
+    <h3>Collection page</h3>
+    <div class="">
+      <button class="btn btn-primary add-dialog" (click)="openModel(content)" *ngIf="selected_collection">
+        + Image
+      </button>
+    </div>
+    <div class="demo">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">
+            <div class="box">
+              <img [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt="Williamson Image"
+                width="100%" height="100px">
+              <div class="box-content">
+                <h3 class="title">{{image}}</h3>
+                <!-- <span class="post">{{collection?.images?.length || 0}} images</span> -->
+              </div>
+              <ul class="icon">
+                <li (click)="imageDownload(user,image)"><a><i class="fa fa-search">D</i></a></li>
+              </ul>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="text-center p-5" *ngIf="images_list?.length <=0 ">
+          images not found
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  
+<ng-template #content let-modal>
+    <div class="bg-aliceblue modal-div">
+      <div class="modal-header">
+        <h4>Add Image</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  
+      <div class="modal-body">
+        <form role="form" name="vehicleForm" >
+  
+          <div class="text-center">
+  
+            <!-- <img *ngIf="selectedImage" [src]="selectedImage " alt="Selected Image" width="50%" height="50%"> -->
+          </div>
+  
+          <!-- <div *ngIf="!selectedImage" class="file-container"> -->
+          <div class="text-center">Drag File Here</div>
+  
+          <input class="form-control file"  name="file" type="file"
+            (change)="onFileSelected($event);" #fileInput1 multiple />
+          <!-- </div> -->
+  
+  
+  
+  
+  
+          <!-- <span class="errors" *ngIf="errorMsg2" -->
+          <!-- >*File should less then 1MB -->
+          <!-- </span> -->
+  
+          <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
+  
+          <div class="text-center" *ngIf="selectedImage">
+            <button type="submit" class="btn btn-primary my-4" (click)='onAdd(fileInput1,modal);modal.dismiss("cross")'>
+              Add Image
+            </button>
+            <!--          
+            <button
+              *ngIf="UpdateActivate"
+              type="button"
+              class="btn btn-danger my-4"
+              (click)="onCancel(modal); "
+            >
+              cancel
+            </button> -->
+          </div>
+        </form>
+      </div>
+  
+    </div>
+  </ng-template>
+  

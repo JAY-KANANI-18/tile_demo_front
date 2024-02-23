@@ -69,8 +69,8 @@ export class LoginComponent {
 
   changeForm() {
 
-    this.loginForm.reset()
-    this.signUpForm.reset()
+    this.loginForm?.reset()
+    this.signUpForm?.reset()
 
     this.error1 = ''
     this.error2 = ''
@@ -129,12 +129,12 @@ export class LoginComponent {
 
         if (data.status) {
           console.log("login Successfully");
-          this.loginForm.reset()
+          this.loginForm?.reset()
 
           const token = localStorage.setItem("Token", (data.data.token).toString());
           const user = localStorage.setItem("User", (data.data.user).toString());
 
-          this.router.navigate(["home"])
+          this.router.navigate(["Home"])
 
         } else {
           this.error1 = data.msg
@@ -170,7 +170,7 @@ export class LoginComponent {
 
         if (data.status) {
 
-          this.signUpForm.reset()
+          this.signUpForm?.reset()
 
           this.changeForm()
         } else {

@@ -13,11 +13,10 @@ import { RouterModule } from '@angular/router';
 
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AuthInterceptorInterceptor } from './services/interceptor/auth-interceptor.interceptor';
-
+// 
 @NgModule({
   declarations: [
     AppComponent,
-
    
   ],
   imports: [

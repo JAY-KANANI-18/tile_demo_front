@@ -11,12 +11,20 @@ import { RouterModule } from '@angular/router';
 import { NgbModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
+import { ProfileComponent } from 'src/app/pages/profile/profile.component';
+import { PortfolioComponent } from 'src/app/pages/portfolio/portfolio.component';
+import { CollectionComponent } from 'src/app/pages/collection/collection.component';
 
 
 @NgModule({
   declarations: [
     UserComponent,
-    HomePageComponent
+    HomePageComponent,
+    NavbarComponent,
+    ProfileComponent,
+    PortfolioComponent,
+    CollectionComponent
   ],
   imports: [
     CommonModule,

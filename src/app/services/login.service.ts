@@ -130,7 +130,7 @@ export class PostsService {
             //   resolve(this.logginToken);
         });
         return promise;
-    }
+    }   
 
 
 }

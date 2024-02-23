@@ -8,6 +8,8 @@ import { subscribeOn } from "rxjs";
 @Injectable({ providedIn: "root" })
 export class PricingService {
   zone: any;
+  collection :any = null
+
   constructor(private http: HttpClient, private router: Router) { }
 
   addVehicle(data: any) {

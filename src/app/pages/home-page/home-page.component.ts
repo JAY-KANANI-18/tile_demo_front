@@ -43,14 +43,15 @@ export class HomePageComponent implements OnInit {
   selectedFolder: any;
 
   public similar_images_list:any = []
+  is_search_load = false
 
-  constructor(
-    private pricingService: PricingService,
-    private ngbService: NgbModal,
-    private loginSevice: PostsService,
-    private router: Router
+    constructor(
+      private pricingService: PricingService,
+      private ngbService: NgbModal,
+      private loginSevice: PostsService,
+      private router: Router
 
-  ) { }
+    ) { }
 
   ngOnInit() {
     this.createVehicleTypeForm()
@@ -151,9 +152,10 @@ export class HomePageComponent implements OnInit {
     // }
 
     // formDataObj.append("name", this.vehicleForm.value.name);
-
+    this.is_search_load = true
     this.pricingService.search(formDataObj).subscribe({
       next: (data: any) => {
+        this.is_search_load = false
         const valuesArray = Object.values(data)
         // if(data.msg){
         //   this.toster.success(data.msg)

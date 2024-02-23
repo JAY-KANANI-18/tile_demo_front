@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-custom navbar-mainbg ">
+    <!-- <a class="navbar-brand navbar-logo" href="#">Navbar</a> -->
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto nav-ul">
+            <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+            <li *ngFor="let item of menuItems"  [class.active]="isActive(item.path)"  (click)="handleItemClick(item.label)">
+                <a [routerLink]="item.path" id="{{item.label}}" >{{ item.label }}</a>
+            </li>
+          
+        </ul>
+    </div>
+</nav>
+
+

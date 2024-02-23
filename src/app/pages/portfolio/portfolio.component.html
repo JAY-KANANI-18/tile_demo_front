@@ -1,0 +1,55 @@
+<h3>Porfoilio page</h3>
+
+<div><button class="btn btn-primary" *ngIf="!is_add_collection" (click)="onColletionAdd()">+ Collection</button>
+  <div *ngIf="is_add_collection">
+
+    <input type="text" class="input m-3" placeholder="name" #collectionName>
+    <button (click)="addCollection(collectionName.value)">add</button>
+  </div>
+</div>
+
+<!-- <div class="demo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6" *ngFor="let collection of collection_list">
+        <div class="box" (click)="onCollection(collection)">
+          <img src="https://bestjquery.com/tutorial/hover-effect/demo403/images/img-1.jpg" alt="Williamson Image">
+          <div class="box-content">
+            <h3 class="title">{{collection.name}}</h3>
+            <span class="post">{{collection?.images?.length || 0}} images</span>
+          </div>
+          <ul class="icon">
+            <li (click)="onother()"><a><i class="fa fa-search"></i></a></li>
+            <li (click)="onother()"><a><i class="fa fa-link"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="text-center p-5" *ngIf="collection_list.length <=0 ">
+      Collections not found
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-6" *ngFor="let collection of collection_list"  (click)="onCollection(collection)">
+            <div class="our-team">
+                <img src="/public/download.jpeg" alt="">
+                <div class="team-content">
+                    <ul class="social-link">
+                        <h3 class="team-title">
+                            <a >{{collection.name}}</a>
+                            <small>{{collection?.images?.length || 0}} images</small>
+                        </h3>
+                    </ul>
+                    <a href="#" class="read"><i class="fa fa-download"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

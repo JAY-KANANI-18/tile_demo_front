@@ -34,8 +34,9 @@ export class NavbarComponent {
 
   setCurrentActive(): void {
     let path :any= this.router.url.split('/')
+    console.log(path);
+    
     setTimeout(() => {
-      
       this.handleItemClick(path[1])
     }, 100);
     
@@ -56,6 +57,8 @@ export class NavbarComponent {
   }
 
   adjustIndicatorPosition(): void {
+    console.log("cccccccccccccccccc");
+    
     const activeItem = document.querySelector('#navbarSupportedContent .active');
     const horiSelector = document.querySelector(".hori-selector") as HTMLElement;
     if (activeItem && horiSelector) {
@@ -70,12 +73,15 @@ export class NavbarComponent {
     }
   }
 
-  isActive(path: string): boolean {
+  isActive(path: string): any {
     
-    return this.router.url === path;
+    // return this.router.url === path;
+    
   }
 
   handleItemClick(path: string): void {
+    console.log(path);
+    
     const lis = document.querySelectorAll('#navbarSupportedContent ul li');
     lis.forEach(li => li.classList.remove("active"));
     const activeItem = document.querySelector(`#${path}`);

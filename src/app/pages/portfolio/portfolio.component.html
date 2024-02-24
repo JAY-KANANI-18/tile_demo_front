@@ -1,14 +1,26 @@
-<h3>Porfoilio page</h3>
+<div class="p-3">
+  <div class="text-start">
 
-<div><button class="btn btn-primary" *ngIf="!is_add_collection" (click)="onColletionAdd()">+ Collection</button>
-  <div *ngIf="is_add_collection">
+    <button class="btn btn-outline-dark  mt-5 mb-3 m-5" *ngIf="!is_add_collection" (click)="onColletionAdd()"> <strong>+
+        New </strong></button>
 
-    <input type="text" class="input m-3" placeholder="name" #collectionName>
-    <button (click)="addCollection(collectionName.value)">add</button>
+    <!-- 
+
+        <div>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          <button class="btn btn-primary" type="button" id="button-addon2">Button</button>
+        </div> -->
+
+
+
+    <div *ngIf="is_add_collection " class=" text-end input input-group input-group-lg mb-3  mt-5 mb-3 m-5">
+
+      <input type="text" class="form-control " placeholder="name" #collectionName>
+      <button class="btn btn-outline-dark" type="button" (click)="addCollection(collectionName.value)">add</button>
+    </div>
   </div>
-</div>
 
-<!-- <div class="demo">
+  <!-- <div class="demo">
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6" *ngFor="let collection of collection_list">
@@ -33,23 +45,28 @@
   </div>
 </div> -->
 
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div class="col-md-4 col-sm-6" *ngFor="let collection of collection_list"  (click)="onCollection(collection)">
-            <div class="our-team">
-                <img src="/public/download.jpeg" alt="">
-                <div class="team-content">
-                    <ul class="social-link">
-                        <h3 class="team-title">
-                            <a >{{collection.name}}</a>
-                            <small>{{collection?.images?.length || 0}} images</small>
-                        </h3>
-                    </ul>
-                    <a href="#" class="read"><i class="fa fa-download"></i></a>
-                </div>
+      <div class="col-md-4 col-sm-6" *ngFor="let collection of collection_list" (click)="onCollection(collection)">
+        <div class="our-team">
+          <img src="/public/download.jpeg" alt="">
+          <div class="team-content">
+            <ul class="social-link ">
+              <h3 class="team-title">
+                <a>{{collection.name}}</a>
+                <small>{{collection?.images?.length || 0}} images</small>
+              </h3>
+            </ul>
+            <div class="row sample">
+
+
             </div>
+            <!-- <a href="#" class="read"><i class="fa fa-download"></i></a> -->
+          </div>
         </div>
+      </div>
 
 
     </div>
+  </div>
 </div>

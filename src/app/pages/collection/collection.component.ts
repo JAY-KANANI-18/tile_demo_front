@@ -23,7 +23,14 @@ export class CollectionComponent {
     private router: Router
 
   ) {
+    if(!this.user){
+      loginSevice.logOut()
+    }
 
+    if (!pricingService.collection){
+
+      router.navigate(["/Portfolio"])
+    } 
     this.onCollection(pricingService.collection)
    }
 

@@ -15,6 +15,7 @@ import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 import { ProfileComponent } from 'src/app/pages/profile/profile.component';
 import { PortfolioComponent } from 'src/app/pages/portfolio/portfolio.component';
 import { CollectionComponent } from 'src/app/pages/collection/collection.component';
+import { FooterComponent } from 'src/app/components/footer/footer.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { CollectionComponent } from 'src/app/pages/collection/collection.compone
     NavbarComponent,
     ProfileComponent,
     PortfolioComponent,
-    CollectionComponent
+    CollectionComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,6 @@ import { CollectionComponent } from 'src/app/pages/collection/collection.compone
     ReactiveFormsModule,
     MdbCarouselModule,
     NgxFileDropModule
-  ]
+  ],
 })
 export class UserModule { }

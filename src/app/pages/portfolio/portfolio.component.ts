@@ -56,7 +56,7 @@ export class PortfolioComponent {
 
 
     this.pricingService.collection = collection
-    this.router.navigate(["Portfolio/ collection.name"])
+    this.router.navigate([`Portfolio/${collection.name}`])
     // this.pricingService.get_collection_details({ "collection_name": }).subscribe({
     //   next: (data: any) => {
     //     console.log(data);

@@ -48,16 +48,18 @@ export class LoginComponent {
     // google.accounts.id.renderButton(document.getElementById('google-btn'));
 
 
-
-    this.signUpForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
-    })
-    this.loginForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
-    })
-
+    // setTimeout(() => {
+      
+      this.signUpForm = new FormGroup({
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        password: new FormControl(null, [Validators.required]),
+      })
+      this.loginForm = new FormGroup({
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        password: new FormControl(null, [Validators.required]),
+      })
+    // }, 500);
+      
 
     this.mainF();
   }
@@ -114,10 +116,10 @@ export class LoginComponent {
     this.error1 = ''
 
 
-    if (this.loginForm.get('email')?.invalid) {
+    if (this.loginForm?.get('email')?.invalid) {
       return this.error1 = "please enter valid email"
     }
-    if (this.loginForm.invalid) {
+    if (this.loginForm?.invalid) {
       return this.error1 = "please enter required values"
     }
 

@@ -30,7 +30,7 @@ export class PortfolioComponent {
       next: (data: any) => {
         console.log(data);
 
-        this.collection_list = data.data[0].collections
+        this.collection_list = data.data[0].collections || []
 
       }, error: (error:any) => {
         console.log(error);
@@ -42,6 +42,9 @@ export class PortfolioComponent {
     this.is_add_collection = true
   }
   addCollection(name: any) {
+    if(!name){
+      return
+    }
     this.pricingService.add_collections({ "name": name }).subscribe({
       next: (data: any) => {
         console.log(data);

@@ -45,13 +45,13 @@ export class HomePageComponent implements OnInit {
   public similar_images_list:any = []
   is_search_load = false
 
-    constructor(
-      private pricingService: PricingService,
-      private ngbService: NgbModal,
-      private loginSevice: PostsService,
-      private router: Router
+      constructor(
+        private pricingService: PricingService,
+        private ngbService: NgbModal,
+        private loginSevice: PostsService,
+        private router: Router
 
-    ) { }
+      ) { }
 
   ngOnInit() {
     this.createVehicleTypeForm()

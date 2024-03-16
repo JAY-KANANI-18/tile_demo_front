@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PostsService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
 
+  constructor(
+    private loginSevice: PostsService,
+
+  ) { }
+  logOut() {
+    this.loginSevice.logOut()
+  }
 }

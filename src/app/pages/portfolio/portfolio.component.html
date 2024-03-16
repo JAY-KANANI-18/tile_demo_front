@@ -1,8 +1,8 @@
 <div class="p-3">
   <div class="text-start">
 
-    <button class="btn btn-outline-dark  mt-5 mb-3 m-5" *ngIf="!is_add_collection" (click)="onColletionAdd()"> <strong>+
-        New </strong></button>
+    <button class="btn  mt-5 mb-3 m-5  " *ngIf="!is_add_collection" (click)="onColletionAdd()"> +
+        New </button>
 
     <!-- 
 
@@ -16,7 +16,7 @@
     <div *ngIf="is_add_collection " class=" text-end input input-group input-group-lg mb-3  mt-5 mb-3 m-5">
 
       <input type="text" class="form-control " placeholder="name" #collectionName>
-      <button class="btn btn-outline-dark" type="button" (click)="addCollection(collectionName.value)">add</button>
+      <button class="btn btn-outline-dark " type="button" (click)="addCollection(collectionName.value)">add</button>
     </div>
   </div>
 

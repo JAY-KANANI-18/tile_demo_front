@@ -174,7 +174,8 @@ export class CollectionComponent {
     // //   return;
     // // }
     let list = []
-    for (const file of files) {
+    
+    for  (const file of files) {
       const formDataObj = new FormData();
       list.push(file.name);
 

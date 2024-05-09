@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/login.service';
@@ -15,6 +15,8 @@ export class CollectionComponent {
   public user = localStorage.getItem("User") || ""
   selectedFolder: any;
   selectedImage: any;
+  @ViewChild('fileInput1') fil! : ElementRef ;
+
 
   constructor(
     private pricingService: PricingService,
@@ -23,23 +25,22 @@ export class CollectionComponent {
     private router: Router
 
   ) {
-    if(!this.user){
+    if (!this.user) {
       loginSevice.logOut()
     }
 
-    if (!pricingService.collection){
+    if (!pricingService.collection) {
 
       router.navigate(["/Portfolio"])
-    } 
+    }
     this.onCollection(pricingService.collection)
-   }
+  }
 
   onCollection(collection: any) {
 
 
     this.pricingService.get_collection_details({ "collection_name": collection.name }).subscribe({
       next: (data: any) => {
-        console.log(data);
 
         this.selected_collection = data.data
         this.images_list = data.data?.images || []
@@ -51,7 +52,6 @@ export class CollectionComponent {
   imageDownload(user: any, image: any) {
     this.pricingService.download_image({ "filename": user + "/" + image }).subscribe({
       next: (data: any) => {
-        console.log(data);
         // this.router.navigateByUrl()
 
 
@@ -73,10 +73,13 @@ export class CollectionComponent {
       }
     })
   }
-  onAdd(fil: any, modal: any) {
+  async onAdd( modal: any) {
 
     // const zip = new JSZip();
+    let fil:any = this.fil
 
+    console.log(fil);
+    
 
     // const folderName = this.selectedFolder.name;
 
@@ -117,19 +120,6 @@ export class CollectionComponent {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     // this.pricingService.add(formData).subscribe({
     //   next: (data:any) => {
     //     console.log(data);
@@ -159,39 +149,27 @@ export class CollectionComponent {
 
 
 
-
-
-    const files = fil.files;
-    console.log(files);
-
-
-
-
-
-
-    // // if (file.size >= 1000000) {
-    // //   this.toster.error('File should be less than 1 Mb')
-    // //   return;
-    // // }
-    let list = []
+    console.log(fil); 
     
-    for  (const file of files) {
-      const formDataObj = new FormData();
-      list.push(file.name);
-
-      // formDataObj.append('files', files[0]);
-      this.pricingService.get_put_url({ filename: `${this.user}/${file.name}` }).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.pricingService.save_files(data.presigned_url, file)
 
 
-        }
-      })
+
+    const files = this.selectedFolder;
+    
+    // let list = await this.uploadmagesToBucket(files)
+    
+    let formData = new FormData()
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
     }
-    this.pricingService.add({ "files": list, "collection_id": this.selected_collection._id, "user_id": localStorage.getItem("User") }).subscribe({
+    console.log(formData);
+    let user:any = localStorage.getItem("User")
+    formData.append("collection_id", this.selected_collection._id);
+    formData.append("user_id", user);
+
+    this.pricingService.add(formData).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.onCollection(this.selected_collection)
 
       }
@@ -230,6 +208,39 @@ export class CollectionComponent {
   }
 
 
+  uploadmagesToBucket(files: any) {
+
+    return new Promise((resolve, reject) => {
+
+
+      let list:any = []
+
+      for (let i = 0; i < files.length; i++) {
+
+        let file = files[i]
+        const formDataObj = new FormData();
+        list.push(file.name);
+
+        // formDataObj.append('files', files[0]);
+        this.pricingService.get_put_url({ filename: `${this.user}/${file.name}` }).subscribe({
+          next: (data: any) => {
+            this.pricingService.save_files(data.presigned_url, file)
+
+            console.log("success",i);
+            
+            if (i==(files.length-1)){
+              resolve(list)
+            }
+          }
+          ,error:(error)=>{
+            console.log(error,i);
+            
+
+          }
+        })
+      }
+    })
+  }
   onFileSelected(e: any) {
 
     this.selectedFolder = e.target.files;
@@ -250,7 +261,6 @@ export class CollectionComponent {
 
     if (e.target.files) {
       let reader = new FileReader()
-      console.log(reader);
 
       reader.readAsDataURL(e.target.files[0])
       reader.onload = (event: any) => {

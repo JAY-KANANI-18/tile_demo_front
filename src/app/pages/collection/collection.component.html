@@ -31,75 +31,88 @@
 
   </div> -->
 
+
+<div class="text-end">
+  <img src="../../../assets/img/bell.png" height="30px" alt="logo">
+
+
+</div>
+
 <div class="p-3">
-    <div class="text-start">
+  <div class="text-start">
 
-        <button class="btn btn-outline-dark add-dialog mt-5 mb-3 m-5 " (click)="openModel(content)"
-            *ngIf="selected_collection">
-          + New
-        </button>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">
-                <div class="our-team">
-                    <img   [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt=" Image" loading="lazy"
-                        height="100px" width="auto" >
-                    <div class="team-content">
-                        <ul class="social-link">
-                            <span class="team-title">
-                                <a>{{image}}</a>
-                            </span>
-                        </ul>
-                        <a (click)="imageDownload(user,image)" class="read"><i class="fa fa-download"></i></a>
-                    </div>
-                </div>
-            </div>
-
-
+    <button class="btn btn-outline-dark add-dialog mt-5 mb-3 m-5 " (click)="openModel(content)"
+      *ngIf="selected_collection">
+      + New
+    </button>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">
+        <div class="our-team">
+          <img [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt=" Image" loading="lazy"
+            height="100px" width="auto">
+          <div class="team-content">
+            <ul class="social-link">
+              <span class="team-title">
+                <a>{{image}}</a>
+              </span>
+            </ul>
+            <a (click)="imageDownload(user,image)" class="read"><i class="fa fa-download"></i></a>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <ng-template #content let-modal>
-        <div class="bg-aliceblue modal-div">
-            <div class="modal-header">
-                <h4>Add Image</h4>
-                <span type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </span>
+
+    </div>
+  </div>
+
+  <ng-template #content let-modal>
+    <div class="bg-aliceblue modal-div">
+      <div class="modal-header">
+        <h4>Add Image</h4>
+        <span type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </span>
+      </div>
+
+      <div class="modal-body">
+        <form role="form" name="vehicleForm">
+
+          <div class="text-center">
+
+            <img *ngIf="selectedImage" [src]="selectedImage " alt="Selected Image" width="50%" height="50%">
+          </div>
+
+
+          <div>
+
+            <div *ngIf="!selectedImage" class="file-container">
+              <div class="text-center">Drag File Here</div>
+
+              <input class="form-control file" name="file" type="file" (change)="onFileSelected($event);" #fileInput1
+                multiple />
             </div>
 
-            <div class="modal-body">
-                <form role="form" name="vehicleForm">
 
-                    <div class="text-center">
-
-                        <!-- <img *ngIf="selectedImage" [src]="selectedImage " alt="Selected Image" width="50%" height="50%"> -->
-                    </div>
-
-                    <!-- <div *ngIf="!selectedImage" class="file-container"> -->
-                    <!-- <div class="text-center">Drag File Here</div> -->
-
-                    <input class="form-control file" name="file" type="file" (change)="onFileSelected($event);"
-                        #fileInput1 multiple />
-                    <!-- </div> -->
+            <div class="text-center" *ngIf="selectedImage">
+              <button type="submit" class="btn btn-primary my-4" (click)='onAdd(  modal);modal.dismiss("cross")'>
+                Add Image
+              </button>
+            </div>
+          </div>
 
 
 
 
+          <!-- <span class="errors" *ngIf="errorMsg2" -->
+          <!-- >*File should less then 1MB -->
+          <!-- </span> -->
 
-                    <!-- <span class="errors" *ngIf="errorMsg2" -->
-                    <!-- >*File should less then 1MB -->
-                    <!-- </span> -->
+          <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
 
-                    <!-- <span class="errors" *ngIf="errorMsg">*{{ errorMsg }}</span> -->
 
-                    <div class="text-center" *ngIf="selectedImage">
-                        <button type="submit" class="btn btn-primary my-4"
-                            (click)='onAdd(fileInput1,modal);modal.dismiss("cross")'>
-                            Add Image
-                        </button>
-                        <!--          
+          <!--          
                 <button
                 *ngIf="UpdateActivate"
                 type="button"
@@ -108,11 +121,11 @@
                 >
                 cancel
             </button> -->
-                    </div>
-                </form>
-            </div>
 
-        </div>
-    </ng-template>
+        </form>
+      </div>
+
+    </div>
+  </ng-template>
 
 </div>

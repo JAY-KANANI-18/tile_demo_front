@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Form, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/login.service';
 declare var google: any
 @Component({
@@ -25,7 +26,10 @@ export class LoginComponent {
   error2: any = ""
   signUpForm!: FormGroup
   loginForm!: FormGroup
-  constructor(public loginService: PostsService, public router: Router) { }
+  policy:boolean = false
+
+  constructor(public loginService: PostsService, public router: Router,    private ngbService: NgbModal,
+  ) { }
 
   ngOnInit() {
 
@@ -33,10 +37,7 @@ export class LoginComponent {
     google.accounts.id.initialize({
       client_id: '599245019741-mgja8rohs1jscc4ee1rjmmpq2mv4so9a.apps.googleusercontent.com',
       callback: (res: any) => {
-        console.log("yyyyy");
-        
-        console.log(res);
-
+    
       }
     });
     google.accounts.id.renderButton(
@@ -126,11 +127,9 @@ export class LoginComponent {
 
     this.loginService.login(this.loginForm.value).subscribe({
       next: (data: any) => {
-        console.log(data);
-        console.log(data.status);
+       
 
         if (data.status) {
-          console.log("login Successfully");
           this.loginForm?.reset()
 
           const token = localStorage.setItem("Token", (data.data.token).toString());
@@ -149,21 +148,25 @@ export class LoginComponent {
     })
 
 
-    console.log("logedas in", this.loginForm.value);
 
 
   }
   signUp(): any {
     this.error2 = ''
+let policy = document.getElementById("policy") as HTMLInputElement
+console.log(policy.checked);
 
-    console.log('kkkkkk');
-
+  
 
     if (this.signUpForm.get('email')?.invalid) {
       return this.error2 = "please enter valid email"
     }
     if (this.signUpForm.invalid) {
       return this.error2 = "please enter required values"
+    }
+    if(!policy.checked){
+      return this.error2 = "Accept privacy policy to moving forward"
+
     }
 
 
@@ -184,5 +187,25 @@ export class LoginComponent {
 
       }
     })
+  }
+  privacyModel(content:any){
+    this.ngbService.open(content,{size:"xl"})
+
+  }
+  isScrolledToBottom = false;
+
+  handleScroll(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+
+    // Calculate the scroll position and dimensions
+    const scrollHeight = textarea.scrollHeight;
+    const clientHeight = textarea.clientHeight;
+    const scrollTop = textarea.scrollTop;
+
+    // Check if the scroll position is at the bottom
+    this.isScrolledToBottom = scrollHeight - clientHeight <= scrollTop + 1;
+  }
+  submitPolicy(){
+    this.policy = true
   }
 }

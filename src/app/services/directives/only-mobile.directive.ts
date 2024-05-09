@@ -12,7 +12,6 @@ export class OnlyMobileDirective {
   onKeyDown(event: any) {
 
     const charCode = event.which ? event.which : event.keyCode;
-    console.log(charCode);
 
 
 

@@ -1,7 +1,7 @@
 <div class="body">
 
   <div class="main">
-    <div class="container a-container" id="a-container" #containerA>
+    <div class="container b-container" id="b-container" #containerB>
       <form class="form" id="a-form" [formGroup]="signUpForm">
         <h2 class="form_title title">Create Account</h2>
         <div class="form__icons"><img class="form__icon"
@@ -16,12 +16,17 @@
         <input class="form__input mt-3" type="text" id="email1" placeholder="Email " formControlName="email">
         <input class="form__input mt-3" type="password" id="password1" placeholder="Password"
           formControlName="password">
+          <div class="d-flex justify-content-center align-items-center">
+            
+            <input type="checkbox" id="policy" name="policy" [checked]="policy">
+            <p class="m-2" for="policy">Accept all  <a (click)="privacyModel(content)"><strong>Terms and Conditions</strong> </a></p>
+          </div>
         <div *ngIf="error2" class="error">*{{error2}} </div>
 
         <button class="form__button button submit prime-color" (click)="signUp()" type="submit">SIGN UP</button>
       </form>
     </div>
-    <div class="container b-container" id="b-container" #containerB>
+    <div class="container a-container" id="a-container" #containerA>
       <form class="form" id="b-form" [formGroup]="loginForm">
         <h2 class="form_title title">Sign in to Website</h2>
         <div class="form__icons"><img class="form__icon"
@@ -44,18 +49,79 @@
       <div class="switch__container" id="switch-c1" #switch1>
         <h2 class="switch__title title">Welcome Back !</h2>
         <p class="switch__description description">To keep connected with us please login with your personal info</p>
-        <button class="switch__button button switch-btn" (click)=changeForm()>SIGN IN</button>
+        <button class="switch__button button switch-btn" (click)=changeForm()>SIGN Up</button>
       </div>
       <div class="switch__container  is-hidden" id="switch-c2" #switch2>
         <h2 class="switch__title title">Hello Friend !</h2>
         <p class="switch__description description">Enter your personal details and start journey with us</p>
-        <button class="switch__button button switch-btn" (click)=changeForm()>SIGN UP</button>
+        <button class="switch__button button switch-btn" (click)=changeForm()>SIGN IN</button>
       </div>
     </div>
   </div>
-</div>
 
-<button  id="google-btn" class="">kherfherg</button>
+</div>\
+
+
+<ng-template #content let-modal >
+  <div class="bg-aliceblue modal-div ">
+    <div class="modal-header p-3">
+      <h4>Terms and Conditions</h4>
+      <span type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </span>
+    </div>
+
+    <div class="modal-body p-3">
+
+      <textarea name="" id="" disabled style="width: 100%;height: 50vh;" class="p-3"  (scroll)="handleScroll($event)" >
+        StockHub – Terms and Conditions of Use
+
+        Welcome to StockHub’s website and our services. By accessing and using StockHub’s reverse image search, you agree to the following terms and conditions (the “Terms”). StockHub reserves the right to update these Terms without prior notice.
+        
+        Prohibited Actions:
+        •	Uploading illegal files is strictly forbidden. Any such submissions may lead to immediate termination of access to StockHub services.
+        •	StockHub’s services are currently free of charge. Our commercial plan will be announced soon.
+        •	You may not display StockHub search results in unauthorized applications or publish, copy, or use them in any way not expressly permitted by StockHub.
+        •	Automated searches via scripts are not allowed and may result in IP blocking or account termination. This site is protected by reCAPTCHA; Google’s Privacy Policy and Terms of Service apply.
+        
+        Intellectual Property:
+        •	Images uploaded to StockHub are securely stored in our database and are not shared with other users. We retain images to continually enhance and provide the best service possible. Copyright remains with the original content owner.
+        
+        Third-Party Links:
+        •	StockHub is not responsible for the content or practices of third-party websites linked through our search results.
+        
+        Affiliate Disclosure:
+        •	StockHub may earn commissions from purchases made through “sponsored” links, which are clearly labelled. No personal information or images are shared with third parties.
+        
+        Disclaimer of Warranty:
+        •	StockHub does not guarantee that our service will be free from inaccuracies, errors, or interruptions. The service is provided “as is” without any warranty.
+        
+        Limitation of Liability:
+        •	StockHub will not be liable for any indirect, incidental, or consequential damages arising from the use of our service. The extent of our liability is limited to the maximum extent permitted by law.
+        
+        
+        By using StockHub, you acknowledge and agree to these Terms.
+        
+        Release and Waiver
+        To the maximum extent permitted by applicable law, you hereby release and waive all claims against StockHub, its subsidiaries, affiliates, officers, agents, licensors, co-branders, other partners, and employees from any and all liability for claims, damages (actual and/or consequential), costs, and expenses (including litigation costs and attorneys’ fees) arising from or related to your use of StockHub. Additionally, you expressly waive and relinquish any rights and benefits you may have under any law or principle of similar effect, to the fullest extent permitted by law.
+        
+        
+        
+        General Terms
+        Invalidity of Specific Terms: If any provision of the Terms of Service is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavour to give effect to the parties’ intentions as reflected in the provision, and the other provisions of the document remain in full force and effect.
+        Location of Lawsuit and Choice of Law: The Terms of Service and the relationship between you and StockHub shall be governed by the laws of the Province of Ontario without regard to its conflict of law provisions. You and StockHub agree to submit to the jurisdiction of the courts of the Province of Ontario.
+        No Waiver of Rights by StockHub: StockHub’s failure to exercise or enforce any right or provision of the Terms of Service shall not constitute a waiver of such right or provision.
+        
+      </textarea>
+      <button class="btn btn-success p-2"  [disabled]="!isScrolledToBottom" (click)="submitPolicy();modal.dismiss('cross')">Submit</button>
+
+  
+    </div>
+
+  </div>
+</ng-template>
+
+<!-- <button  id="google-btn" class="">kherfherg</button> -->
 <!-- <div id="g_id_onload"
      data-client_id="599245019741-mgja8rohs1jscc4ee1rjmmpq2mv4so9a.apps.googleusercontent.com"
      data-context="signin"

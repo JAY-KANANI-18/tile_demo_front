@@ -28,7 +28,6 @@ export class PortfolioComponent {
   get_collections() {
     this.pricingService.get_collections({}).subscribe({
       next: (data: any) => {
-        console.log(data);
 
         this.collection_list = data.data[0].collections || []
 
@@ -47,7 +46,6 @@ export class PortfolioComponent {
     }
     this.pricingService.add_collections({ "name": name }).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.get_collections()
         this.is_add_collection = false
 

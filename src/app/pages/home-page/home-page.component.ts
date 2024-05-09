@@ -67,7 +67,6 @@ export class HomePageComponent implements OnInit {
     event.preventDefault(); // Prevent the default behavior
 
     this.droppedFiles = event.files;
-    console.log(this.droppedFiles);
 
     if (this.droppedFiles.length === 1 && this.droppedFiles[0].fileEntry.isFile) {
       const fileEntry = this.droppedFiles[0].fileEntry as FileSystemFileEntry;
@@ -95,7 +94,6 @@ export class HomePageComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', zipBlob, 'folder.zip');
 
-    console.log(formData);
 
 
     // Replace 'your-backend-api-endpoint' with the actual endpoint
@@ -109,7 +107,6 @@ export class HomePageComponent implements OnInit {
     });
   }
   async onSearch(val: any) {
-    console.log(val);
     this.Vehicles = this.allVehicles.filter((vehicle: any) =>
       vehicle.name.toLowerCase().includes(val.toLowerCase())
     );
@@ -124,10 +121,8 @@ export class HomePageComponent implements OnInit {
             this.Vehicles.push({ image: each.name })
 
           });
-          console.log(this.Vehicles);
 
           // this.Vehicles = data.carpets
-          console.log(data);
 
         }, error: (error) => {
 
@@ -190,7 +185,6 @@ export class HomePageComponent implements OnInit {
         convertedArray.sort((a:any,b:any)=>{ return b.similarity_percentage - a.similarity_percentage})
         convertedArray.splice(0,1)
         this.similar_images_list = convertedArray
-        console.log(convertedArray);
         
         // console.log(this.Vehicles);
         // this.vehicleForm.reset()
@@ -298,7 +292,6 @@ export class HomePageComponent implements OnInit {
 
 
     const files = fil.files;
-    console.log(files);
 
 
 
@@ -317,7 +310,6 @@ export class HomePageComponent implements OnInit {
       // formDataObj.append('files', files[0]);
       this.pricingService.get_put_url({ filename: `${this.user}/${file.name}` }).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.pricingService.save_files(data.presigned_url, file)
 
 
@@ -326,7 +318,6 @@ export class HomePageComponent implements OnInit {
     }
     this.pricingService.add({ "files": list, "collection_id": this.selected_collection._id, "user_id": localStorage.getItem("User") }).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.onCollection(this.selected_collection)
 
       }
@@ -381,7 +372,6 @@ export class HomePageComponent implements OnInit {
 
     if (e.target.files) {
       let reader = new FileReader()
-      console.log(reader);
 
       reader.readAsDataURL(e.target.files[0])
       reader.onload = (event: any) => {
@@ -404,7 +394,6 @@ export class HomePageComponent implements OnInit {
   get_collections() {
     this.pricingService.get_collections({}).subscribe({
       next: (data: any) => {
-        console.log(data);
 
         this.collection_list = data.data[0].collections
 
@@ -420,7 +409,6 @@ export class HomePageComponent implements OnInit {
   addCollection(name: any) {
     this.pricingService.add_collections({ "name": name }).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.get_collections()
         this.is_add_collection = false
 
@@ -433,7 +421,6 @@ export class HomePageComponent implements OnInit {
 
     this.pricingService.get_collection_details({ "collection_name": collection.name }).subscribe({
       next: (data: any) => {
-        console.log(data);
 
         this.selected_collection = data.data
         this.images_list = data.data?.images || []
@@ -445,7 +432,6 @@ export class HomePageComponent implements OnInit {
   imageDownload(user: any, image: any) {
     this.pricingService.download_image({ "filename": user + "/" + image }).subscribe({
       next: (data: any) => {
-        console.log(data);
         // this.router.navigateByUrl()
 
 

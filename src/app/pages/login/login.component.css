@@ -252,3 +252,9 @@
 .error{
   color: red;
 }
+
+.model{
+  width: 50vw;
+  height: 50vh;
+  background-color: #564bd6;
+}

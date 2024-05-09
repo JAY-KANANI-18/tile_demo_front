@@ -23,6 +23,7 @@ i {
     border: 1px solid grey;
     border-top: none;
     border-right: none;
+	background-color: white;
 }
 #navbarSupportedContent{
 	overflow: hidden;

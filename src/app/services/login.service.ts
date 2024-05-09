@@ -36,7 +36,6 @@ export class PostsService {
             email: data.email,
             password: data.password,
         };
-        console.log(data);
 
         return this.http.post(`${environment.URL}/login`, Data);
     }
@@ -51,10 +50,8 @@ export class PostsService {
         // const duser = localStorage.removeItem("User");
 
         this.router.navigate(["./login"]);
-        console.log(dtoken);
         this.http.post(`${environment.URL}/logout`, { token}).subscribe({
             next: (data: any) => {
-                console.log(data);
                 // this.toster.success(data.msg)
                 localStorage.setItem("newToken", '');
                 localStorage.setItem("User", '');
@@ -70,13 +67,11 @@ export class PostsService {
     login(data: any) {
         const Data: any = { email: data.email, password: data.password };
 
-        console.log(data);
         return this.http.post(`${environment.URL}/login`, Data);
     }
     signUp(data: any) {
         const Data: any = { email: data.email, password: data.password };
 
-        console.log(data);
         return this.http.post(`${environment.URL}/signup`, Data);
     }
     //   autoLogout() {
@@ -102,7 +97,6 @@ export class PostsService {
         const promise = new Promise((resolve, reject) => {
             const token = localStorage.getItem("Token") || "";
             if (!token) this.logOut();
-            console.log("front request auth token", token);
             this.http
                 .get(`${environment.URL}/auth`, {
                     headers: new HttpHeaders({ Authorization: token }),

@@ -34,7 +34,6 @@ export class NavbarComponent {
 
   setCurrentActive(): void {
     let path :any= this.router.url.split('/')
-    console.log(path);
     
     setTimeout(() => {
       this.handleItemClick(path[1])
@@ -57,7 +56,6 @@ export class NavbarComponent {
   }
 
   adjustIndicatorPosition(): void {
-    console.log("cccccccccccccccccc");
     
     const activeItem = document.querySelector('#navbarSupportedContent .active');
     const horiSelector = document.querySelector(".hori-selector") as HTMLElement;

@@ -52,7 +52,7 @@ export class PricingService {
   }
   add(data: any) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
     return this.http.post(`${environment.URL}/add_carpet`, data, { headers });
@@ -75,7 +75,7 @@ export class PricingService {
       }
     })
   }
-
+  
   get_put_url(data: any) {
     const headers = new HttpHeaders({
       "Referrer-Policy": "strict-origin-when-cross-origin",

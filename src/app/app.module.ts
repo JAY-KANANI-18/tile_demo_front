@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AuthInterceptorInterceptor } from './services/interceptor/auth-interceptor.interceptor';
 // 
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:8000', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +36,9 @@ import { AuthInterceptorInterceptor } from './services/interceptor/auth-intercep
     ReactiveFormsModule,
     MdbCarouselModule,
     NgxFileDropModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SocketIoModule.forRoot(config)
+
     
   ],
   providers: [{provide:HTTP_INTERCEPTORS,        useClass:AuthInterceptorInterceptor,

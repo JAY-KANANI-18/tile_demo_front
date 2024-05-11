@@ -18,6 +18,7 @@ import { CollectionComponent } from 'src/app/pages/collection/collection.compone
 import { FooterComponent } from 'src/app/components/footer/footer.component';
 
 
+
 @NgModule({
   declarations: [
     UserComponent,
@@ -42,7 +43,8 @@ import { FooterComponent } from 'src/app/components/footer/footer.component';
     HttpClientModule,
     ReactiveFormsModule,
     MdbCarouselModule,
-    NgxFileDropModule
+    NgxFileDropModule,
   ],
+  providers:[]
 })
 export class UserModule { }

@@ -3,14 +3,20 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
-import { subscribeOn } from "rxjs";
+
 
 @Injectable({ providedIn: "root" })
+
+
 export class PricingService {
-  zone: any;
+
   collection :any = null
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { 
+
+   
+
+  }
 
 
   getAllCarpet() {

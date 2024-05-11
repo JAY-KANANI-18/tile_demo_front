@@ -39,13 +39,28 @@
 </div>
 
 <div class="p-3">
-  <div class="text-start">
+  <div class="text-start " *ngIf="ReadyToUpload">
 
     <button class="btn btn-outline-dark add-dialog mt-5 mb-3 m-5 " (click)="openModel(content)"
       *ngIf="selected_collection">
       + New
     </button>
   </div>
+  
+<div class="progress-section text-start " data-aos="fade-left" data-aos-once="true" *ngIf="!ReadyToUpload">
+  <div class="task-progress ">
+    <p>Uploads : 
+      <span>{{uploadData?.uploaded}}/{{uploadData?.total}}</span>
+    </p>
+    <progress class="progress progress1" [max]=" uploadData?.total" [value]="uploadData?.uploaded"></progress>
+  </div>
+  <div class="task-progress">
+    <p>Processed :
+      <span>{{ uploadData?.processed}}/{{uploadData?.total}}</span>
+    </p>
+    <progress class="progress progress3"[max]=" uploadData?.total" [value]="uploadData?.processed"></progress>
+  </div>
+</div>
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">

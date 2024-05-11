@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/login.service';
 import { PricingService } from 'src/app/services/pricing.servive';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-collection',
@@ -16,15 +17,29 @@ export class CollectionComponent {
   selectedFolder: any;
   selectedImage: any;
   @ViewChild('fileInput1') fil! : ElementRef ;
+  ReadyToUpload = true
+  uploadData:any = null
 
 
   constructor(
     private pricingService: PricingService,
     private ngbService: NgbModal,
     private loginSevice: PostsService,
-    private router: Router
+    private router: Router,
+    private socket:SocketService
 
   ) {
+
+
+    socket.getMessage(this.user).subscribe({
+      next:(data)=>{
+        console.log(data);
+        this.uploadData = data
+        
+      }
+    })
+
+    socket.sendMessage("hello")
     if (!this.user) {
       loginSevice.logOut()
     }
@@ -167,9 +182,11 @@ export class CollectionComponent {
     let user:any = localStorage.getItem("User")
     formData.append("collection_id", this.selected_collection._id);
     formData.append("user_id", user);
-
+    this.ReadyToUpload = false
     this.pricingService.add(formData).subscribe({
       next: (data: any) => {
+        this.ReadyToUpload = true
+
         this.onCollection(this.selected_collection)
 
       }

@@ -10,8 +10,8 @@ import { PostsService } from 'src/app/services/login.service';
 })
 export class ForgotPasswordComponent {
   error2: any = ''
-  constructor(public loginService: PostsService
-  ) { }
+    constructor(public loginService: PostsService
+    ) { }
 
 
   sendEmail():any {
@@ -25,6 +25,9 @@ export class ForgotPasswordComponent {
     this.loginService.forgot_password({ email :email.value}).subscribe({
       next: (data: any) => {
         console.log(data);
+        if(data.status){
+            alert("email sent sucessfully")
+        }
 
       }, error: (error) => {
         console.log(error);

@@ -3,6 +3,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "rxjs": ["node_modules/rxjs"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -23,6 +26,7 @@
       "ES2022",
       "dom"
     ]
+    
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

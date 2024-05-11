@@ -126,8 +126,22 @@ export class PostsService {
         return promise;
     }   
     forgot_password(data:any){
-        
-        return this.http.post(`${environment.URL}/forgot_password`, data);
+        const headers = new HttpHeaders({
+            // 'Content-Type': 'application/json',
+            // 'Content-Type': "application/x-www-form-urlencoded",
+      
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          });
+        return this.http.post(`${environment.URL}/forgot_password`, data,{headers});
+    }
+    resetPassword(data:any){
+        const headers = new HttpHeaders({
+            // 'Content-Type': 'application/json',
+            // 'Content-Type': "application/x-www-form-urlencoded",
+      
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          });
+        return this.http.post(`${environment.URL}/reset_password`, data);
     }
 
 }

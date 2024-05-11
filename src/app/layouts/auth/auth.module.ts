@@ -11,12 +11,14 @@ import { RouterModule } from '@angular/router';
 import { NgbModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { ForgotPasswordComponent } from 'src/app/pages/forgot-password/forgot-password.component';
 
 
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
+    ForgotPasswordComponent
 
   ],
   imports: [

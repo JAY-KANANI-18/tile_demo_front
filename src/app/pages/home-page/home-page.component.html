@@ -79,7 +79,7 @@
             <img src="./images/free-search-icon-2903-thumb.png"><i class="fw-bold fs-5 mx-2">
             </i>
             <div class="">{{image?.image}}</div>
-            <span class="">{{image?.similarity_percentage || 0 }} %</span>
+            <span class="">{{(image?.similarity_percentage || 0).toFixed(2) }} %</span>
           </div>
 
           <a href="#" class="read"><i class="fa fa-download"></i></a>

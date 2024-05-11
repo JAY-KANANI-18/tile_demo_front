@@ -125,6 +125,9 @@ export class PostsService {
         });
         return promise;
     }   
-
+    forgot_password(data:any){
+        
+        return this.http.post(`${environment.URL}/forgot_password`, data);
+    }
 
 }

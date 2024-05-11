@@ -12,25 +12,6 @@ export class PricingService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  addVehicle(data: any) {
-    return this.http.post(`${environment.URL}/Pricing/VehicleType`, data);
-  }
-
-
-
-  updateVehicle(id: any) {
-    return this.http.get(`${environment.URL}/Pricing/Vehicles/Update?id=${id}`);
-  }
-
-  saveVehicle(data: any, id: any) {
-    return this.http.post(
-      `${environment.URL}/Pricing/Vehicles/Update/save/${id}`,
-      data
-    );
-  }
-  getCountry() {
-    return this.http.get(`${environment.URL}/Country`);
-  }
 
   getAllCarpet() {
     const headers = new HttpHeaders({
@@ -53,6 +34,8 @@ export class PricingService {
   add(data: any) {
     const headers = new HttpHeaders({
       // 'Content-Type': 'application/json',
+      // 'Content-Type': "application/x-www-form-urlencoded",
+
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
     return this.http.post(`${environment.URL}/add_carpet`, data, { headers });
@@ -97,6 +80,16 @@ export class PricingService {
   }
   download_image(data:any){
     return this.http.post(`${environment.URL}/get_presigned_url` ,data);
+  }
+  get_user_data(){
+    const headers = new HttpHeaders({
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+
+    return this.http.post(`${environment.URL}/get/user`, {
+      headers: new HttpHeaders({ Authorization: localStorage.getItem("Token") || "" }),
+  } );
+
   }
 
 }

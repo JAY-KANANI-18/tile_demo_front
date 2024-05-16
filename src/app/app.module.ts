@@ -15,7 +15,9 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { AuthInterceptorInterceptor } from './services/interceptor/auth-interceptor.interceptor';
 // 
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:8000', options: {} };
+import { environment } from 'src/environments/environment';
+
+const config: SocketIoConfig = { url: environment.URL, options: {forceNew:true } };
 @NgModule({
   declarations: [
     AppComponent,

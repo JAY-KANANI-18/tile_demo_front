@@ -124,7 +124,7 @@ export class HomePageComponent implements OnInit {
 
           // this.Vehicles = data.carpets
 
-        }, error: (error) => {
+        }, error: (error:any) => {
 
 
         }

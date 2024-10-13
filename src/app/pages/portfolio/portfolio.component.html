@@ -47,13 +47,13 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-sm-6" *ngFor="let collection of collection_list" (click)="onCollection(collection)">
+      <div class="col-md-4 col-sm-6" *ngFor="let collection of pricingService.collectionList" (click)="onCollection(collection)">
         <div class="our-team">
           <img src="/public/download.jpeg" alt="">
           <div class="team-content">
             <ul class="social-link ">
               <h3 class="team-title">
-                <a>{{collection.name}}</a>
+                <a>{{collection?.name}}</a>
                 <small>{{collection?.images?.length || 0}} images</small>
               </h3>
             </ul>

@@ -9,6 +9,8 @@ import {
 } from "@angular/common/http";
 import { Observable, catchError, finalize, of, tap, throwError } from "rxjs";
 import { LoadingServiceService } from "../loading-service.service";
+import { PostsService } from "../login.service";
+import { PricingService } from "../pricing.servive";
 // import { PostsService } from "../login.service";
 // import { ToastrService } from "ngx-toastr";
 
@@ -16,8 +18,11 @@ import { LoadingServiceService } from "../loading-service.service";
 export class AuthInterceptorInterceptor implements HttpInterceptor {
   constructor(
     private loadingService: LoadingServiceService,
-    // private loginService: PostsService,
-    // private toster: ToastrService
+    private loginService: PostsService,
+    private pricingService: PricingService,
+    // private toster: ToastrService,
+    
+    
   ) {}
 
   intercept(
@@ -36,21 +41,28 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
 
     }
     
-    request = request.clone({
+    request =  request.clone({
       headers: request.headers.set("token", localtoken),
     });
+    console.log({request});
+    
 
     return next.handle(request).pipe(
       tap((event) => {
         if (event instanceof HttpResponse) {
+          console.log({event});
+          if(event.body.STATUS_CODE == 100){
+            this.pricingService.pricingModalOpen = true
+          }
+          
         }
       }),
-      catchError((error) => {
+      catchError((error:any) => {
         console.log(error);
         if (error.status === 401) {
           console.log("time to logout");
-
-          // this.loginService.logOut();
+           this.loginService.logOut()
+          
           // this.toster.error('session complete')
         }
 

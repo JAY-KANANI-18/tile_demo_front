@@ -11,7 +11,7 @@ import { SocketService } from 'src/app/services/socket.service';
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent {
-  selected_collection: any;
+  public selected_collection: any;
   images_list: any;
   public user = localStorage.getItem("User") || ""
   selectedFolder: any;
@@ -22,7 +22,7 @@ export class CollectionComponent {
 
 
   constructor(
-    private pricingService: PricingService,
+    public pricingService: PricingService,
     private ngbService: NgbModal,
     private loginSevice: PostsService,
     private router: Router,
@@ -31,11 +31,27 @@ export class CollectionComponent {
   ) {
 
 
-    socket.getMessage(this.user).subscribe({
-      next:(data)=>{
+
+    socket.getUploadStatus(this.user).subscribe({
+      next:(data:any)=>{
         console.log(data);
-        this.uploadData = data
-        
+        if(data.event == "upload.status"){
+          if(data?.status === 2){
+            setTimeout(() => {
+              
+              pricingService.uploadObj.uploading = false
+            }, 500);
+            this.onCollection(this.selected_collection)
+         
+          }else{
+            pricingService.uploadObj.uploading = true
+
+          }
+          pricingService.uploadObj.total = data?.total
+          pricingService.uploadObj.uploaded = data?.uploaded
+          pricingService.uploadObj.processed = data?.processed
+          pricingService.uploadObj.fails = data?.fails
+        }
       }
     })
 
@@ -54,18 +70,21 @@ export class CollectionComponent {
   onCollection(collection: any) {
 
 
-    this.pricingService.get_collection_details({ "collection_name": collection.name }).subscribe({
+    this.pricingService.get_collection_details({ "collection_name": collection?.name }).subscribe({
       next: (data: any) => {
 
         this.selected_collection = data.data
         this.images_list = data.data?.images || []
+        if(data.data.isUploading){
+          this.pricingService.uploadObj.uploading = data.data.isUploading
+        }
 
       }
     })
 
   }
   imageDownload(user: any, image: any) {
-    this.pricingService.download_image({ "filename": user + "/" + image }).subscribe({
+    this.pricingService.download_image({ "filename": user + "/" + this.selected_collection._id +"/" + image  }).subscribe({
       next: (data: any) => {
         // this.router.navigateByUrl()
 
@@ -183,6 +202,12 @@ export class CollectionComponent {
     formData.append("collection_id", this.selected_collection._id);
     formData.append("user_id", user);
     this.ReadyToUpload = false
+    this.pricingService.uploadObj  = {
+      uploading:true,
+      total : 0,
+      completed:0,
+      fails:0
+    }
     this.pricingService.add(formData).subscribe({
       next: (data: any) => {
         this.ReadyToUpload = true
@@ -236,10 +261,10 @@ export class CollectionComponent {
 
         let file = files[i]
         const formDataObj = new FormData();
-        list.push(file.name);
+        list.push(file?.name);
 
         // formDataObj.append('files', files[0]);
-        this.pricingService.get_put_url({ filename: `${this.user}/${file.name}` }).subscribe({
+        this.pricingService.get_put_url({ filename: `${this.user}/${file?.name}` }).subscribe({
           next: (data: any) => {
             this.pricingService.save_files(data.presigned_url, file)
 

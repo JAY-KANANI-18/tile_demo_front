@@ -30,6 +30,7 @@ export class HomePageComponent implements OnInit {
   public vehicleName: any;
   public allVehicles: any;
   public vehicleForm: any;
+  public SelectedFilter: any = '';
   selectedImage: any;
   public user = localStorage.getItem("User") || ""
 
@@ -46,7 +47,7 @@ export class HomePageComponent implements OnInit {
   is_search_load = false
 
       constructor(
-        private pricingService: PricingService,
+        public pricingService: PricingService,
         private ngbService: NgbModal,
         private loginSevice: PostsService,
         private router: Router
@@ -54,9 +55,9 @@ export class HomePageComponent implements OnInit {
       ) { }
 
   ngOnInit() {
+    this.getUserDetail()
     this.createVehicleTypeForm()
-    this.getCarpets();
-    this.get_collections()
+    this.getCollection();
 
   }
 
@@ -111,10 +112,12 @@ export class HomePageComponent implements OnInit {
       vehicle.name.toLowerCase().includes(val.toLowerCase())
     );
   }
-  getCarpets() {
+  getCollection() {
     this.pricingService.getAllCarpet().subscribe(
       {
         next: (data: any) => {
+          console.log({data});
+          this.pricingService.collectionList = data.carpets
           this.Vehicles = []
 
           data.carpets.forEach((each: any) => {
@@ -122,7 +125,6 @@ export class HomePageComponent implements OnInit {
 
           });
 
-          // this.Vehicles = data.carpets
 
         }, error: (error:any) => {
 
@@ -140,7 +142,8 @@ export class HomePageComponent implements OnInit {
     const formDataObj = new FormData();
     formDataObj.append("file", file);
     formDataObj.append("user_id", this.user);
-
+    formDataObj.append("collection_id", this.SelectedFilter);
+    
     // if (file.size >= 1000000) {
     //   this.toster.error('File should be less than 1 Mb')
     //   return;
@@ -158,11 +161,16 @@ export class HomePageComponent implements OnInit {
         // }
         // modal.dismiss('Click')
 
-        const convertedArray: any = Object.keys(data).map(key => ({
-          image: data[key].image,
-          similarity_percentage: data[key].similarity_percentage
+        // const convertedArray: any = Object.keys(data).map(key => ({
+        //   image: data[key].image,
+        //   similarity_percentage: data[key].similarity_percentage
+        // }));
+        const convertedArray: any = data.result.map((key:any) => ({
+          image: key.image_path.split("/"),
+          similarity_percentage: key.similarity_score * 100
         }));
-
+        console.log({convertedArray});
+        
         this.Vehicles = []
 
         
@@ -182,8 +190,8 @@ export class HomePageComponent implements OnInit {
         //   // this.Vehicles.push(name)
 
         // }
-        convertedArray.sort((a:any,b:any)=>{ return b.similarity_percentage - a.similarity_percentage})
-        convertedArray.splice(0,1)
+        // convertedArray.sort((a:any,b:any)=>{ return b.similarity_percentage - a.similarity_percentage})
+        // convertedArray.splice(0,1)
         this.similar_images_list = convertedArray
         
         // console.log(this.Vehicles);
@@ -392,9 +400,10 @@ export class HomePageComponent implements OnInit {
     this.loginSevice.logOut()
   }
   get_collections() {
-    this.pricingService.get_collections({}).subscribe({
+    this.pricingService.get_collections().subscribe({
       next: (data: any) => {
-
+        console.log({data});
+        
         this.collection_list = data.data[0].collections
 
       }, error: (error) => {
@@ -456,4 +465,18 @@ export class HomePageComponent implements OnInit {
   onother() {
     window.alert("No , It's Not Working !!!!!  CLICK 'D' IF YOU FIND")
   }
+  getUserDetail(){
+    this.pricingService.get_user_data().subscribe({
+      next:(data:any)=>{
+        console.log(data);
+        this.loginSevice.userData = data.user
+
+      },error:(error)=>{
+
+        console.log(error);
+        
+      }
+    })
+  }
+
 }

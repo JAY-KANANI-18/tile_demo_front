@@ -25,7 +25,6 @@ export class ProfileComponent {
       next:(data:any)=>{
         console.log(data);
         this.userData = data.user
-        
 
       },error:(error)=>{
 

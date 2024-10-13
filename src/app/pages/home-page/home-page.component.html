@@ -42,7 +42,6 @@
           </div>
       </nav>
   </div> -->
-
 <div class="main ">
   <div class="container  pb-5 pt-5">
     <div class="row">
@@ -52,7 +51,11 @@
       </div>
       <div class="container mt-5 mb-5 search-mn">
         <div class="form-group" x-data="{ fileName: '' }">
-          <div class="input-group  ">
+          <div class="input-group  "  *ngIf="!is_search_load" >
+            <select class="btn select  mx-1" [(ngModel)]="SelectedFilter" >
+              <option value="" selected >All</option>
+              <option *ngFor="let collection of pricingService.collectionList" [value]="collection?._id">{{collection?.name}}</option>
+            </select>
             <input class="form-control form-control-lg  search-file " id="formFileLg" type="file" name="file"
               type="file" (change)="onFileSelected($event);" #fileInput />
 
@@ -73,12 +76,18 @@
 
       <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 " *ngFor="let image of similar_images_list">
         <div class="card mt-4" style="width: 24rem;">
-          <img class="card-img-top" [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image.image"
-            alt="Card image cap" style="height: 24rem;">
+          <img
+            [src]="'http://127.0.0.1:5000/image/load?userId=' + image.image[0] +'&collectionId=' + image.image[1] + '&image=' + image.image[2]"
+            alt=" Image" loading="lazy" height="100px" width="auto">
+          <!-- <img class="card-img-top" [src]="'http://127.0.0.1:8000/get_image?filename=' + user + '/'+ image.image"
+            alt="Card image cap" style="height: 24rem;"> -->
+          <!-- <img class="card-img-top" [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image.image"
+            alt="Card image cap" style="height: 24rem;"> -->
           <div class="card-body text-center" *ngIf="similar_images_list?.length >0">
-            <img src="./images/free-search-icon-2903-thumb.png"><i class="fw-bold fs-5 mx-2">
-            </i>
-            <div class="">{{image?.image}}</div>
+            <!-- <img src="./images/free-search-icon-2903-thumb.png" -->
+            <!-- ><i class="fw-bold fs-5 mx-2">
+            </i> -->
+            <div class="">{{image?.image[2]}}</div>
             <span class="">{{(image?.similarity_percentage || 0).toFixed(2) }} %</span>
           </div>
 
@@ -90,9 +99,15 @@
       </div>
       <div *ngIf="is_search_load" class="text-center  p-5">
 
-        <div class="loadingio-spinner-ellipsis-65gcycy5qin"><div class="ldio-796cys4dpyn">
-          <div></div><div></div><div></div><div></div><div></div>
-          </div></div>
+        <div class="loadingio-spinner-ellipsis-65gcycy5qin">
+          <div class="ldio-796cys4dpyn">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -143,7 +158,6 @@
     </div>
   </div>
 </div> -->
-
 <ng-template #content let-modal>
   <div class="bg-aliceblue modal-div">
     <div class="modal-header">

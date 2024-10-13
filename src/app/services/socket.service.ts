@@ -5,14 +5,31 @@ import { map } from "rxjs";
 
 export class SocketService {
     constructor(private socket: Socket) {
-        this.socket.connect();
+        console.log("SOCKET CONNECTING>>>");
+        
+        this.socket.connect((err)=>{
+            if(err){
+                console.log("SOCKET CON ERROR" + err);
+                return
+            }
+
+        });
+        this.socket.on("connect", () => {
+            console.log("SOCKET CONNECTED");
+        });
+
+        // Handle connection errors
+        this.socket.on("connect_error", (error: any) => {
+            console.log("SOCKET CONNECTION ERROR:", error);
+        });
      }
 
 
     sendMessage(msg: string) {
         this.socket.emit('message', msg);
     }
-    getMessage(userId:any) {
+
+    getUploadStatus(userId:any){
         return this.socket.fromEvent(userId)
     }
 }

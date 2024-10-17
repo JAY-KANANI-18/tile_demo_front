@@ -16,6 +16,7 @@ import { AuthInterceptorInterceptor } from './services/interceptor/auth-intercep
 // 
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
+import { ToastrModule } from 'ngx-toastr';
 
 const config: SocketIoConfig = { url: environment.Socket, options: {
   transports: ['websocket', 'polling']
@@ -23,6 +24,7 @@ const config: SocketIoConfig = { url: environment.Socket, options: {
 @NgModule({
   declarations: [
     AppComponent,
+    
    
   ],
   imports: [
@@ -40,8 +42,13 @@ const config: SocketIoConfig = { url: environment.Socket, options: {
     ReactiveFormsModule,
     MdbCarouselModule,
     NgxFileDropModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, // Example of configuring ToastrModule
+      positionClass: '*',
+      preventDuplicates: true,
+    }),
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
 
     
   ],

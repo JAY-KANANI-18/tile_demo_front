@@ -45,6 +45,7 @@ export class HomePageComponent implements OnInit {
 
   public similar_images_list:any = []
   is_search_load = false
+  currentImage:any = ''
 
       constructor(
         public pricingService: PricingService,
@@ -108,6 +109,9 @@ export class HomePageComponent implements OnInit {
     });
   }
   async onSearch(val: any) {
+
+
+    
     this.Vehicles = this.allVehicles.filter((vehicle: any) =>
       vehicle.name.toLowerCase().includes(val.toLowerCase())
     );
@@ -135,12 +139,25 @@ export class HomePageComponent implements OnInit {
 
     );
   }
+  onCompare(compareImage:any){
+    // this.pricingService.compareModalOpen = true
+    const formDataObj = new FormData();
+    formDataObj.append("file", this.currentImage);
+    formDataObj.append("compareImage","http://127.0.0.1:5000/image/load?userId=" + compareImage);
 
+    this.pricingService.compare(formDataObj).subscribe({
+      next:(data:any)=>{
+        console.log({data});
+        
+      }
+    })
+  }
   search(files: any, modal: any = null) {
 
     const file = files.files[0];
     const formDataObj = new FormData();
     formDataObj.append("file", file);
+    this.currentImage = file
     formDataObj.append("user_id", this.user);
     formDataObj.append("collection_id", this.SelectedFilter);
     

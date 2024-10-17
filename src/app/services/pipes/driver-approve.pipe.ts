@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "driverApprove",
+  name: "membership",
 })
-export class DriverApprovePipe implements PipeTransform {
+export class MembershipType implements PipeTransform {
   transform(value: any) {
     switch (value) {
-      case 0:
-        return "pending";
-      case 1:
-        return "approved";
-      case 2:
-        return "declined";
+      case 420:
+        return "Free";
+      case 421:
+        return "Pro";
+      case 422:
+        return "Bussiness";
       default:
-        return "pending";
+        return "Free";
     }
   }
 }

@@ -1,15 +1,33 @@
 
-<div class="header bg-gradient-skyblue p-3 pb-7 pt-7">
-  <div class="container-fluid">
-    <div class="header">
-      <h1>Profile</h1>
-      <span for="">Email : </span>
-      <span>{{userData.email}}</span>
-      
-      <div class="mt-3">
-        <button (click)="logOut()" class="btn ">LogOut</button>
-        
-      </div>
+
+
+
+<div class="wrapper box">
+    <div class="ribbon text-center">{{loginSevice.userData.membership | membership }}</div>
+  <div class="img-area">
+    <div class="inner-area">
+      <img src="https://img.freepik.com/free-photo/fresh-autumn-leaves-reveal-vibrant-organic-pattern-generated-by-ai_188544-15037.jpg" alt="">
     </div>
+  </div>
+  <span class="m-3">{{loginSevice.userData.email}}</span>
+  <!-- <div class="name">SHIFT DMP</div> -->
+
+  <div class="buttons">
+      <button (click)="openModal()">Upgrade</button>
+      <button  (click)="logOut()" >Logout</button>
+  </div>
+  <div class="social-share">
+      <div class="row">
+        <div>Images</div>
+          <span>{{loginSevice.userData.imagesCount}}</span>
+      </div>
+      <div class="row">
+        <div>Collections</div>
+          <span>{{loginSevice.userData.collectionCount }}</span>
+      </div>
+      <div class="row">
+        <div>searches</div>
+          <span>{{loginSevice.userData.searchCount}}</span>
+      </div>
   </div>
 </div>

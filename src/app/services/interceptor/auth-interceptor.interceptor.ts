@@ -12,7 +12,7 @@ import { LoadingServiceService } from "../loading-service.service";
 import { PostsService } from "../login.service";
 import { PricingService } from "../pricing.servive";
 // import { PostsService } from "../login.service";
-// import { ToastrService } from "ngx-toastr";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
@@ -20,7 +20,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     private loadingService: LoadingServiceService,
     private loginService: PostsService,
     private pricingService: PricingService,
-    // private toster: ToastrService,
+    private toster: ToastrService,
     
     
   ) {}
@@ -51,6 +51,9 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
       tap((event) => {
         if (event instanceof HttpResponse) {
           console.log({event});
+          // this.toster.success("success")
+        //         // this.toster.success(data.msg)
+
           if(event.body.STATUS_CODE == 100){
             this.pricingService.pricingModalOpen = true
           }
@@ -65,6 +68,8 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
           
           // this.toster.error('session complete')
         }
+         this.toster.error(error.error.msg)
+
 
         throw error;
       }),

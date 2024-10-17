@@ -1,0 +1,10 @@
+.footer-links .footer-text:hover{
+    color: #949494;
+    text-decoration: underline #2c82bb 2px;
+  }
+  .main{
+    border-top: 1px solid gray;
+  }
+ ul{
+    list-style: none;
+  }

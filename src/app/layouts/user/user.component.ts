@@ -9,24 +9,11 @@ import { PricingService } from 'src/app/services/pricing.servive';
 })
 export class UserComponent {
   constructor(
-    private pricingService:PricingService,
-    private loginSevice:PostsService
+    private pricingService: PricingService,
+    private loginSevice: PostsService
   ) {
+    pricingService.setUserDetail()
 
-    this.pricingService.get_user_data().subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.loginSevice.userData = data.user
-        if(data.user.membership === 400){
-            pricingService.pricingModalOpen = true
-        }
-
-      }, error: (error) => {
-
-        console.log(error);
-
-      }
-    })
 
   }
 }

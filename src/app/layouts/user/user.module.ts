@@ -19,6 +19,9 @@ import { FooterComponent } from 'src/app/components/footer/footer.component';
 import { PriceTableComponent } from 'src/app/components/price-table/price-table.component';
 import { pricingComponent } from 'src/app/components/pricing/pricing.component';
 import { PaymentComponent } from 'src/app/components/payment/payment.component';
+import { FileUploadComponent } from 'src/app/components/upload/upload.component';
+import { MembershipType } from 'src/app/services/pipes/driver-approve.pipe';
+import { CompareComponent } from 'src/app/components/compare/compare.component';
 
 
 
@@ -33,7 +36,10 @@ import { PaymentComponent } from 'src/app/components/payment/payment.component';
     FooterComponent,
     pricingComponent,
     PriceTableComponent,
-    PaymentComponent
+    PaymentComponent,
+    FileUploadComponent,
+    MembershipType,
+    CompareComponent
 
   ],
   imports: [

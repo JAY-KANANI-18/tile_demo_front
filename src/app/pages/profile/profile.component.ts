@@ -11,7 +11,7 @@ export class ProfileComponent {
 
   userData:any = {}
   constructor(
-    private loginSevice: PostsService,
+    public loginSevice: PostsService,
     private pricingService: PricingService,
 
   ) { 
@@ -32,5 +32,8 @@ export class ProfileComponent {
         
       }
     })
+  }
+  openModal(){
+    this.pricingService.pricingModalOpen = true
   }
 }

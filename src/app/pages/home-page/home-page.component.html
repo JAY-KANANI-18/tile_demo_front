@@ -51,10 +51,11 @@
       </div>
       <div class="container mt-5 mb-5 search-mn">
         <div class="form-group" x-data="{ fileName: '' }">
-          <div class="input-group  "  *ngIf="!is_search_load" >
-            <select class="btn select  mx-1" [(ngModel)]="SelectedFilter" >
-              <option value="" selected >All</option>
-              <option *ngFor="let collection of pricingService.collectionList" [value]="collection?._id">{{collection?.name}}</option>
+          <div class="input-group  " *ngIf="!is_search_load">
+            <select class="btn select  mx-1" [(ngModel)]="SelectedFilter">
+              <option value="" selected>All</option>
+              <option *ngFor="let collection of pricingService.collectionList" [value]="collection?._id">
+                {{collection?.name}}</option>
             </select>
             <input class="form-control form-control-lg  search-file " id="formFileLg" type="file" name="file"
               type="file" (change)="onFileSelected($event);" #fileInput />
@@ -68,7 +69,7 @@
   </div>
 </div>
 <!-- End search Bar  -->
-
+<!-- <app-file-upload></app-file-upload> -->
 <!-- image section -->
 <section>
   <div class="container">
@@ -89,9 +90,13 @@
             </i> -->
             <div class="">{{image?.image[2]}}</div>
             <span class="">{{(image?.similarity_percentage || 0).toFixed(2) }} %</span>
+            <div>
+
+              <button (click)="onCompare(image.image[0] +'&collectionId=' + image.image[1] + '&image=' + image.image[2])" class="btn btn-primary">Compare</button>
+            </div>
           </div>
 
-          <a href="#" class="read"><i class="fa fa-download"></i></a>
+          <!-- <a href="#" class="read"><i class="fa fa-download"></i></a> -->
         </div>
       </div>
       <div class="text-center p-5" *ngIf="similar_images_list?.length <=0 && !is_search_load ">
@@ -113,6 +118,10 @@
     </div>
   </div>
 </section>
+
+
+
+<app-compare *ngIf="pricingService?.compareModalOpen"/>
 
 <!-- pagination -->
 

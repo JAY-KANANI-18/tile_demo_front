@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { PostsService } from "./login.service";
 
 
 @Injectable({ providedIn: "root" })
@@ -13,6 +14,7 @@ export class PricingService {
 
   collection: any = null
   pricingModalOpen: boolean = false
+  compareModalOpen: boolean = false
   collectionList: Array<any> = []
   modalContent: any = ''
   currentmodal: any
@@ -25,6 +27,8 @@ export class PricingService {
     processed: 0
   }
 
+  
+
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === ' ') {
@@ -32,7 +36,8 @@ export class PricingService {
     }
   }
 
-  constructor(private http: HttpClient, private router: Router, private modalService: NgbModal,) {
+  constructor(private http: HttpClient,    private loginSevice:PostsService
+    , private router: Router, private modalService: NgbModal,) {
 
   }
   OpenModal() {
@@ -44,6 +49,32 @@ export class PricingService {
 
     this.modalContent = content
     this.currentmodal = this.modalService.open(content, { size: "xl", backdrop: 'static', keyboard: false });
+    this.currentmodal.result.then((res:any)=>{
+      console.log("sdsssssdsssssssssssssssss");
+      this.compareModalOpen = false
+      
+    }).catch((e:any)=>{
+      console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      this.compareModalOpen = false
+      
+    })
+
+  }
+  setCompareModalContent(content: any) {
+    console.log({ content });
+
+    this.modalContent = content
+    this.currentmodal = this.modalService.open(content, { size: "xl", backdrop: 'static', keyboard: false });
+    this.currentmodal.result.then((res:any)=>{
+      console.log("sdsssssdsssssssssssssssss");
+      this.pricingModalOpen = false
+      
+    }).catch((e:any)=>{
+      console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      this.pricingModalOpen = false
+      
+    })
+
   }
 
 
@@ -67,6 +98,14 @@ export class PricingService {
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
     return this.http.post(`${environment.URL}/image/search`, data);
+
+  }
+  compare(data: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'multipart/form-data',
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+    return this.http.post(`${environment.URL}/image/compare`, data);
 
   }
   add(data: any) {
@@ -96,6 +135,10 @@ export class PricingService {
       }
     })
   }
+  addPayment(data:any){
+    return this.http.post(`${environment.URL}/payment/add`, data);
+
+  }
 
   get_put_url(data: any) {
     const headers = new HttpHeaders({
@@ -118,6 +161,24 @@ export class PricingService {
   }
   download_image(data: any) {
     return this.http.post(`${environment.URL}/image/getPreSignedUrl`, data);
+  }
+
+  setUserDetail(){
+
+    this.get_user_data().subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.loginSevice.userData = data.user
+        if(data.user.membership === 400){
+          this.pricingModalOpen = true
+        }
+        
+      }, error: (error) => {
+        
+        console.log(error);
+        
+      }
+    })
   }
   get_user_data() {
     const headers = new HttpHeaders({

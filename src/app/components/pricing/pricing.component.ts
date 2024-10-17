@@ -28,7 +28,7 @@ export class pricingComponent {
     },
     {
       name: 'Pro',
-      price: 59,
+      price: 5900,
       features: [
         '20 GB of storage',
         'upto 3 users',
@@ -40,7 +40,7 @@ export class pricingComponent {
     },
     {
       name: 'Business',
-      price: 99,
+      price: 9999,
       features: [
         '100 GB of storage',
         'upto 5 users',

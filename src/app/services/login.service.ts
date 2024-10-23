@@ -9,7 +9,6 @@ import { Router } from "@angular/router";
 // import { AES } from "crypto-js";
 // import { CookieService } from "ngx-cookie-service";
 // import * as CryptoJS from "crypto-js";
-import { ToastrService } from "ngx-toastr";
 import { environment } from "src/environments/environment";
 
 // import { Post } from './post.model';
@@ -28,12 +27,10 @@ export class PostsService {
         private http: HttpClient,
         private router: Router,
         // private cookieService: CookieService,
-        private toster: ToastrService
     ) {
 
     
-    
-
+        
 
      }
     logginToken: any = false;
@@ -46,6 +43,9 @@ export class PostsService {
         };
 
         return this.http.post(`${environment.URL}/login`, Data);
+    }
+    updateCollection(data:any){
+        return this.http.post(`${environment.URL}/collection/update`, data);
     }
 
     logOut() {

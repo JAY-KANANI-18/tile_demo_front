@@ -5,11 +5,12 @@
 export const environment = {
   production: false,
   // URL : 'http://65.1.238.129',
-  // URL : 'http://127.0.0.1:8000',    
-  URL : 'http://127.0.0.1:5000',    
+  URL : 'http://194.238.26.214:5000',    
+  // URL : 'http://127.0.0.1:5000',    
   // URL : 'https://imgstockhub.in',
   // Socket : 'ws://127.0.0.1:8000',
-  Socket : 'http://127.0.0.1:5000',
+  Socket : 'http://194.238.26.214:5000',
+  // Socket : 'http://127.0.0.1:5000',
   // Socket : 'wss://imgstockhub.in',
   stripe: {
     // apiKey: 'pk_test_51N45EpSAETG1lrtoGx6ndq4U7XSTTzKA8lZk0RgfHqhqdNql2DMifnExHs47haeBFRSqThvEfU9M2CeOA6vHOquU00LLyJoust'

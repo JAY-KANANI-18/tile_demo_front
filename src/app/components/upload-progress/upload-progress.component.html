@@ -1,0 +1,41 @@
+<div class="conatainer" *ngIf="pricingServide.uploadProgress.files.length > 0 ">
+    <div class="secondary" >
+        <div class="d-flex secondary-1 ">
+            <div class="check-box">
+                <img [src]="status ? '../../../assets/img/upload.gif' : '../../../assets/img/check.png' " alt="check" width="80%">
+            </div>
+            <div class="cont d-flex justify-content-between">
+                <div class="font-4 messege">
+                    {{pricingServide.uploadProgress.completed}} of {{pricingServide.uploadProgress.files.length}} uploaded
+                </div>
+            </div>
+            <div class=" mx-3" (click)="onOpen()" [ngClass]="{'rot': isOpen}"><img src="../../../assets/img/up-arrow.png" width="20px" alt="dropdown-divider">
+            </div>
+        </div>
+    </div>
+    <div  [@openClose]="isOpen ? 'open' : 'closed'" class=""  [ngClass]="{'active-class': isOpen}">
+        <!-- <div class="mid">
+            <button class="btn btn-primary ">all</button>
+            <button class="btn btn-primary m-1">completed</button>
+            <button class="btn btn-primary m-1">progress</button>
+            <button class="btn btn-primary m-1">failed</button>
+        </div> -->
+        <br>
+        <div class="list">
+            <div  *ngFor="let file of pricingServide.uploadProgress.files" >
+                <div class="item">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column">
+                            <div class="font-2">{{file.name}}</div>
+                            <div class="font-3"><strong>{{file.status | fileStatus}} </strong></div>
+                        </div>
+                        <div>
+                        </div>
+                        <button class="btn btn-outline-primary" *ngIf="file.status == 5">Retry</button>
+                    </div>
+                </div>
+                <mat-progress-bar mode="indeterminate" *ngIf="file.status == 1"></mat-progress-bar>
+            </div>
+        </div>
+    </div>
+</div>

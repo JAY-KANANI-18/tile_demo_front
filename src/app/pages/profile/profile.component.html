@@ -11,7 +11,7 @@
   </div>
   <span class="m-3">{{loginSevice.userData.email}}</span>
   <!-- <div class="name">SHIFT DMP</div> -->
-
+  <div class="error m-3">Membership Expires in {{getDaycount(loginSevice.userData.membershipEndAt , loginSevice.userData.membershipStartAt)}} days !</div>
   <div class="buttons">
       <button (click)="openModal()">Upgrade</button>
       <button  (click)="logOut()" >Logout</button>
@@ -31,3 +31,44 @@
       </div>
   </div>
 </div>
+<div class="text-center m-5">
+<h3>
+  Search Hisory
+</h3>
+</div>
+<div class="container  mt-5">
+  <ul class="responsive-table">
+    <li class="table-header">
+      <div class="col col-1">Date</div>
+      <div class="col col-1">Time</div>
+      <div class="col col-2">Input</div>
+      <div class="col col-3">Results</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" >42235</div>
+      <div class="col col-1" >42235</div>
+
+      <div class="col col-2" >John Doe</div>
+      <div class="col col-3" >$350</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" >42442</div>
+      <div class="col col-1" >42442</div>
+      <div class="col col-2" >Jennifer Smith</div>
+      <div class="col col-3" >$220</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" >42257</div>
+      <div class="col col-1" >42257</div>
+      <div class="col col-2" >John Smith</div>
+      <div class="col col-3" >$341</div>
+    </li>
+    <li class="table-row">
+      <div class="col col-1" >42311</div>
+      <div class="col col-1" >42311</div>
+      <div class="col col-2" >John Carpenter</div>
+      <div class="col col-3" >$115</div>
+    </li>
+  </ul>
+</div>
+

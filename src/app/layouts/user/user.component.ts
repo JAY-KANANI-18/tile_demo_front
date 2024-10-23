@@ -13,6 +13,8 @@ export class UserComponent {
     private loginSevice: PostsService
   ) {
     pricingService.setUserDetail()
+    loginSevice.updateCollection({isUploading:false}).subscribe()
+
 
 
   }

@@ -1,7 +1,7 @@
 import { HostListener, Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
-import { Router } from "@angular/router";
+import { Params, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PostsService } from "./login.service";
@@ -25,6 +25,16 @@ export class PricingService {
     uploaded: 0,
     fails: 0,
     processed: 0
+  }
+  compareObj:any = {
+    compareImgUrl: "",
+    sourceImgUrl: "",
+    isCompare:false,
+    top_left:[]
+  }
+  uploadProgress:any = {
+    completed:0,
+    files : []
   }
 
   
@@ -108,14 +118,42 @@ export class PricingService {
     return this.http.post(`${environment.URL}/image/compare`, data);
 
   }
-  add(data: any) {
+  add(data: any,header:any = { }) {
     const headers = new HttpHeaders({
       // 'Content-Type': 'application/json',
       // 'Content-Type': "application/x-www-form-urlencoded",
+      // 'Content-Type': 'multipart/form-data',
+      // ...header,
+    
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+    return this.http.post(`${environment.URL}/image/add`, data, { headers  });
+
+
+  }
+  addWithUrl(data: any) {
+    const headers = new HttpHeaders({
+      // 'Content-Type': 'application/json',
+      // 'Content-Type': "application/x-www-form-urlencoded",
+            // 'Content-Type': 'multipart/form-data',
+
 
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
-    return this.http.post(`${environment.URL}/image/add`, data, { headers });
+    return this.http.post(`${environment.URL}/image/add/url`, data, { headers });
+
+
+  }
+  addInCloud(url:string,data: any) {
+    const headers = new HttpHeaders({
+      // 'Content-Type': 'application/json',
+      // 'Content-Type': "application/x-www-form-urlencoded",
+            // 'Content-Type': 'multipart/form-data',
+
+
+      // "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+    return this.http.put(`${url}/image/add/url`, data, { headers });
 
 
   }

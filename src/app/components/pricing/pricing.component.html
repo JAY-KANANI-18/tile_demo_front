@@ -18,9 +18,10 @@
           </div>
         </div>
       </div>
-
-
-  
+      <div class="text-center">
+        <button  class="btn btn-primary" *ngIf="!loginService?.userData?.isTrialExpired && loginService.userData.membership !=420 " (click)="onTryFree()"> Try Free</button>
+      </div>
+      
     </div>
 
   <!-- </div>  -->

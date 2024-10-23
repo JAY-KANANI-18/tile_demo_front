@@ -34,7 +34,6 @@ export class PriceTableComponent {
         handler: (response: any) => {
           console.log({response});
           this.pricingService.addPayment({
-
             orderId:response.razorpay_order_id,
             paymentId:response.razorpay_payment_id,
             signature:response.razorpay_signature,

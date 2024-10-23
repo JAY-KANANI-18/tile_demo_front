@@ -73,12 +73,12 @@
 <!-- image section -->
 <section>
   <div class="container">
-    <div id="portfolio" class="row mt-5">
-
-      <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 " *ngFor="let image of similar_images_list">
+    <div id="portfolio" >
+<div *ngIf="!is_search_load"class="row mt-5">
+      <div  class="col-sm-6 col-md-4 col-lg-4 col-xl-4 " *ngFor="let image of similar_images_list">
         <div class="card mt-4" style="width: 24rem;">
           <img
-            [src]="'http://127.0.0.1:5000/image/load?userId=' + image.image[0] +'&collectionId=' + image.image[1] + '&image=' + image.image[2]"
+            [src]="'http://194.238.26.214:5000/image/load?userId=' + image.image[0] +'&collectionId=' + image.image[1] + '&image=' + image.image[2]"
             alt=" Image" loading="lazy" height="100px" width="auto">
           <!-- <img class="card-img-top" [src]="'http://127.0.0.1:8000/get_image?filename=' + user + '/'+ image.image"
             alt="Card image cap" style="height: 24rem;"> -->
@@ -99,6 +99,7 @@
           <!-- <a href="#" class="read"><i class="fa fa-download"></i></a> -->
         </div>
       </div>
+    </div>
       <div class="text-center p-5" *ngIf="similar_images_list?.length <=0 && !is_search_load ">
         images not found
       </div>

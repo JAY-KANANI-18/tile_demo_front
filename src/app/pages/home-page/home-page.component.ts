@@ -140,14 +140,26 @@ export class HomePageComponent implements OnInit {
     );
   }
   onCompare(compareImage:any){
-    // this.pricingService.compareModalOpen = true
+    this.pricingService.compareModalOpen = true
     const formDataObj = new FormData();
     formDataObj.append("file", this.currentImage);
-    formDataObj.append("compareImage","http://127.0.0.1:5000/image/load?userId=" + compareImage);
+    formDataObj.append("compareImage","http://194.238.26.214:5000/image/load?userId=" + compareImage);
 
     this.pricingService.compare(formDataObj).subscribe({
       next:(data:any)=>{
-        console.log({data});
+        console.log({data : data});
+
+          let reader = new FileReader()
+    
+          reader.readAsDataURL( this.currentImage)
+          reader.onload = (event: any) => {
+            this.pricingService.compareObj.sourceImgUrl = event.target.result
+          }
+        
+        this.pricingService.compareObj.compareImgUrl = "http://194.238.26.214:5000/image/load?userId=" + compareImage
+        this.pricingService.compareObj.top_left = data.data.top_left
+        this.pricingService.compareObj.width = data.data.width
+        this.pricingService.compareObj.height = data.data.height
         
       }
     })

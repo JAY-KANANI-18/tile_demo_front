@@ -15,13 +15,13 @@ export class pricingComponent {
 
   pricingBoxes = [
     {
-      name: 'Free',
-      price: 0,
+      name: 'basic',
+      price: 2999,
       features: [
-        '1 GB of storage',
+        '10 GB of storage',
         'upto 1 users',
         'upto 1 collection',
-        'upto 20 searches',
+        '1000 searches'
 
       ],
       code:420
@@ -30,22 +30,26 @@ export class pricingComponent {
       name: 'Pro',
       price: 5900,
       features: [
-        '20 GB of storage',
-        'upto 3 users',
+        '50 GB of storage',
+        'upto 1 users',
         'upto 10 collection',
-        'upto 500 searches',
+        'Compare function',
+        '10000 searches'
+
       ],
       code:421
 
     },
     {
       name: 'Business',
-      price: 9999,
+      price: 19999,
       features: [
         '100 GB of storage',
-        'upto 5 users',
+        'upto 3 users',
         'unlimited collection',
-        'unlimite searches',
+        'Compare function',
+        'unlimited searches'
+
       ],
       code:422
 
@@ -56,5 +60,21 @@ export class pricingComponent {
     // Initialize modal with a reference after the view is ready
     this.pricingService.setModalContent(this.content)
   }
-
+  
+  onTryFree(){
+    this.pricingService.addPayment({
+      orderId:null,
+      paymentId:null,
+      signature:null,
+      userId:this.loginService.userData._id,
+      amount:0,
+      membership:420
+    }).subscribe({
+      next:(data:any)=>{
+        console.log({data});
+         this.pricingService.setUserDetail()
+        
+      }
+    })
+  }
 }

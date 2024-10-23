@@ -47,7 +47,7 @@
     </button>
   </div>
   
-<div class="progress-section text-start " data-aos="fade-left" data-aos-once="true" *ngIf="pricingService.uploadObj.uploading">
+<!-- <div class="progress-section text-start " data-aos="fade-left" data-aos-once="true" *ngIf="pricingService.uploadObj.uploading">
   <div class="task-progress ">
     <p>Uploads : 
       <span>{{pricingService?.uploadObj?.uploaded}}/{{pricingService?.uploadObj?.total}}</span>
@@ -60,12 +60,12 @@
     </p>
     <progress class="progress progress3" [max]=" pricingService?.uploadObj?.total"[value]="pricingService?.uploadObj?.processed"></progress>
   </div>
-</div>
+</div> -->
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">
         <div class="our-team">
-          <img [src]="'http://127.0.0.1:5000/image/load?userId=' + user +'&collectionId=' +selected_collection._id + '&image=' + image" alt=" Image" loading="lazy"
+          <img [src]="'http://194.238.26.214:5000/image/load?userId=' + user +'&collectionId=' +selected_collection._id + '&image=' + image" alt=" Image" loading="lazy"
             height="100px" width="auto">
             
           <!-- <img [src]="'http://127.0.0.1:8000/get_image?filename=' + user + '/'+ image" alt=" Image" loading="lazy"

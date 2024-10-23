@@ -23,6 +23,12 @@ import { FileUploadComponent } from 'src/app/components/upload/upload.component'
 import { MembershipType } from 'src/app/services/pipes/driver-approve.pipe';
 import { CompareComponent } from 'src/app/components/compare/compare.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UploadProgressComponent } from 'src/app/components/upload-progress/upload-progress.component';
+import { FileStatusPipe } from 'src/app/services/pipes/file-status.pipe';
+
 
 
 @NgModule({
@@ -39,7 +45,9 @@ import { CompareComponent } from 'src/app/components/compare/compare.component';
     PaymentComponent,
     FileUploadComponent,
     MembershipType,
-    CompareComponent
+    FileStatusPipe,
+    CompareComponent,
+    UploadProgressComponent
 
   ],
   imports: [
@@ -57,6 +65,10 @@ import { CompareComponent } from 'src/app/components/compare/compare.component';
     ReactiveFormsModule,
     MdbCarouselModule,
     NgxFileDropModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressBarModule,
+
   ],
   providers:[]
 })

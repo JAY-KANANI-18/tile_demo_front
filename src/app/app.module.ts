@@ -17,6 +17,8 @@ import { AuthInterceptorInterceptor } from './services/interceptor/auth-intercep
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { ToastrModule } from 'ngx-toastr';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const config: SocketIoConfig = { url: environment.Socket, options: {
   transports: ['websocket', 'polling']
@@ -49,6 +51,7 @@ const config: SocketIoConfig = { url: environment.Socket, options: {
     }),
     ReactiveFormsModule,
     SocketIoModule.forRoot(config),
+
 
     
   ],

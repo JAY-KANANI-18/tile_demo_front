@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0rem 0 5rem 0;
+  padding: 0rem 0 1rem 0;
 }
 
 .pricing > h1 {

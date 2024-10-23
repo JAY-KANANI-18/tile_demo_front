@@ -1,0 +1,8 @@
+.min{
+    max-height: 90% !important;
+}
+.wrapper{
+    max-height: 100vh !important;
+    box-sizing: border-box;
+    position: relative;
+}

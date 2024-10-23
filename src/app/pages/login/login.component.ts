@@ -3,7 +3,6 @@ import { Form, FormControl, FormGroup, NgForm, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/login.service';
-declare var google: any
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,16 +33,16 @@ export class LoginComponent {
   ngOnInit() {
 
 
-    google.accounts.id.initialize({
-      client_id: '599245019741-mgja8rohs1jscc4ee1rjmmpq2mv4so9a.apps.googleusercontent.com',
-      callback: (res: any) => {
+    // google.accounts.id.initialize({
+    //   client_id: '599245019741-mgja8rohs1jscc4ee1rjmmpq2mv4so9a.apps.googleusercontent.com',
+    //   callback: (res: any) => {
     
-      }
-    });
-    google.accounts.id.renderButton(
-      document.getElementById("google-btn"),
-      { locale: "en" }
-    );
+    //   }
+    // });
+    // google.accounts.id.renderButton(
+    //   document.getElementById("google-btn"),
+    //   { locale: "en" }
+    // );
     // google.accounts.id.prompt();
 
     // google.accounts.id.renderButton(document.getElementById('google-btn'));
@@ -52,8 +51,8 @@ export class LoginComponent {
     // setTimeout(() => {
       
       this.signUpForm = new FormGroup({
-        email: new FormControl(null, [Validators.required, Validators.email]),
-        password: new FormControl(null, [Validators.required]),
+        email: new FormControl(null, [Validators?.required, Validators?.email]),
+        password: new FormControl(null, [Validators?.required]),
       })
       this.loginForm = new FormGroup({
         email: new FormControl(null, [Validators.required, Validators.email]),
@@ -125,7 +124,7 @@ export class LoginComponent {
     }
 
 
-    this.loginService.login(this.loginForm.value).subscribe({
+    this.loginService.login(this.loginForm?.value).subscribe({
       next: (data: any) => {
        
 
@@ -170,7 +169,7 @@ console.log(policy.checked);
     }
 
 
-    this.loginService.signUp(this.signUpForm.value).subscribe({
+    this.loginService.signUp(this.signUpForm?.value).subscribe({
       next: (data: any) => {
 
         if (data.status) {

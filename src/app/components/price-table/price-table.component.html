@@ -1,0 +1,18 @@
+<div class="price-box">
+    <div class="box-header">
+      <div class="package-type">
+        {{ pricingBox.name }}
+      </div>
+      <div class="price">
+        <span class="dollar-signs ">₹</span><span class="h1">{{ pricingBox.price }} <div class="h5">per</div><div class="h3"> month</div></span>
+      </div>
+    </div>
+    <div class="box-body">
+      <ul class="list-unstyled">
+        <li *ngFor="let feature of pricingBox.features">{{ feature }}</li>
+      </ul>
+      <!-- <div class="small-text">Try Now</div> -->
+      <!-- <app-payment class="btn rounded btn-purchase"></app-payment> -->
+      <button class="btn rounded btn-purchase" (click)="onPurchase(pricingBox.price,pricingBox.code)">Purchase</button>
+    </div>
+  </div>

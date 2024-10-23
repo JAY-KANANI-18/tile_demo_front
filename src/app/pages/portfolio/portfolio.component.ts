@@ -10,14 +10,11 @@ import { PricingService } from 'src/app/services/pricing.servive';
   styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent {
-  collection_list: any = [];
   is_add_collection: any = false;
   selected_collection: any;
   images_list: any;
   constructor(
-    private pricingService: PricingService,
-    private ngbService: NgbModal,
-    private loginSevice: PostsService,
+    public pricingService: PricingService,
     private router: Router
 
   ) { }
@@ -26,10 +23,13 @@ export class PortfolioComponent {
 
   }
   get_collections() {
-    this.pricingService.get_collections({}).subscribe({
+    this.pricingService.get_collections().subscribe({
       next: (data: any) => {
-
-        this.collection_list = data.data[0].collections || []
+        console.log({data3:data});
+        
+        this.pricingService.collectionList = data.carpets
+        console.log({a:this.pricingService.collectionList});
+        
 
       }, error: (error:any) => {
         console.log(error);

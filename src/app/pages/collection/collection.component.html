@@ -32,26 +32,46 @@
   </div> -->
 
 
-<div class="text-end">
+<!-- <div class="text-end">
   <img src="../../../assets/img/bell.png" height="30px" alt="logo">
 
 
-</div>
+</div> -->
 
 <div class="p-3">
-  <div class="text-start">
+  <div class="text-start " *ngIf="ReadyToUpload">
 
     <button class="btn btn-outline-dark add-dialog mt-5 mb-3 m-5 " (click)="openModel(content)"
-      *ngIf="selected_collection">
+      *ngIf="!pricingService.uploadObj.uploading">
       + New
     </button>
   </div>
+  
+<!-- <div class="progress-section text-start " data-aos="fade-left" data-aos-once="true" *ngIf="pricingService.uploadObj.uploading">
+  <div class="task-progress ">
+    <p>Uploads : 
+      <span>{{pricingService?.uploadObj?.uploaded}}/{{pricingService?.uploadObj?.total}}</span>
+    </p>
+    <progress class="progress progress1" [max]=" pricingService?.uploadObj?.total" [value]="pricingService?.uploadObj?.uploaded"></progress>
+  </div>
+  <div class="task-progress">
+    <p>Processed :
+      <span>{{ pricingService?.uploadObj?.processed}}/{{pricingService?.uploadObj?.total}}</span>
+    </p>
+    <progress class="progress progress3" [max]=" pricingService?.uploadObj?.total"[value]="pricingService?.uploadObj?.processed"></progress>
+  </div>
+</div> -->
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6" *ngFor="let image of images_list">
         <div class="our-team">
-          <img [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt=" Image" loading="lazy"
+          <img [src]="'http://194.238.26.214:5000/image/load?userId=' + user +'&collectionId=' +selected_collection._id + '&image=' + image" alt=" Image" loading="lazy"
             height="100px" width="auto">
+            
+          <!-- <img [src]="'http://127.0.0.1:8000/get_image?filename=' + user + '/'+ image" alt=" Image" loading="lazy"
+            height="100px" width="auto"> -->
+          <!-- <img [src]="'https://imgstockhub.in/get_image?filename=' + user + '/'+ image" alt=" Image" loading="lazy"
+            height="100px" width="auto"> -->
           <div class="team-content">
             <ul class="social-link">
               <span class="team-title">
@@ -129,3 +149,5 @@
   </ng-template>
 
 </div>
+
+

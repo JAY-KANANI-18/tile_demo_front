@@ -12,6 +12,12 @@
           
         </ul>
     </div>
+    <div *ngIf="userService?.userData?.membership == 420 || userService?.userData?.membership == 400" (click)="onTryPremium()">
+        <button class="btn btn-primary p-3 mx-3 mb--1">
+            
+            Try Premium
+        </button>
+    </div>
  
     <div class="logo">
         <img src="../../../assets/img/logo.png" height="30px" alt ="logo">
@@ -19,3 +25,4 @@
 </nav>
 
 
+<app-pricing *ngIf="pricingService?.pricingModalOpen"/>

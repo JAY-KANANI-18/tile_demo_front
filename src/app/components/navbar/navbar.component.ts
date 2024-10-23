@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { PostsService } from 'src/app/services/login.service';
+import { PricingService } from 'src/app/services/pricing.servive';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +10,8 @@ import { filter } from 'rxjs';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router,public userService:PostsService,public pricingService:PricingService) {}
+
   menuItems = [
     { label: 'Home', path: '/Home' },
     { label: 'Portfolio', path: '/Portfolio' },
@@ -18,6 +21,9 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.addActiveClassOnPageMove();
 
+  }
+  onTryPremium(){
+    this.pricingService.pricingModalOpen =  !this.pricingService.pricingModalOpen
   }
 
   addActiveClassOnPageMove(): void {

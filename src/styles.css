@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif !important;
+}
+
 body {
     margin: 0;
     line-height: normal;
@@ -60,4 +68,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button{
   background-color:#564bd6 !important;
   color:white !important
+}
+/* For WebKit-based browsers like Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track (background of the scrollbar) */
+  border-radius: 10px; /* Optional rounded corners */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar handle */
+  border-radius: 10px; /* Rounded corners for the handle */
+  border: 3px solid #f1f1f1; /* Optional border around the handle */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color when hovered */
 }

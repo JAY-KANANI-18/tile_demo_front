@@ -1,36 +1,96 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HostListener, Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
-import { Router } from "@angular/router";
+import { Params, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
-import { subscribeOn } from "rxjs";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { PostsService } from "./login.service";
+
 
 @Injectable({ providedIn: "root" })
+
+
 export class PricingService {
-  zone: any;
-  collection :any = null
 
-  constructor(private http: HttpClient, private router: Router) { }
+  collection: any = null
+  pricingModalOpen: boolean = false
+  compareModalOpen: boolean = false
+  collectionList: Array<any> = []
+  modalContent: any = ''
+  currentmodal: any
+  currentCollection: any
+  uploadObj: any = {
+    uploading: false,
+    total: 0,
+    uploaded: 0,
+    fails: 0,
+    processed: 0
+  }
+  compareObj:any = {
+    compareImgUrl: "",
+    sourceImgUrl: "",
+    isCompare:false,
+    top_left:[]
+  }
+  uploadProgress:any = {
+    completed:0,
+    files : []
+  }
 
-  addVehicle(data: any) {
-    return this.http.post(`${environment.URL}/Pricing/VehicleType`, data);
+  
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === ' ') {
+      event.preventDefault(); // Prevent the default action for the spacebar
+    }
+  }
+
+  constructor(private http: HttpClient,    private loginSevice:PostsService
+    , private router: Router, private modalService: NgbModal,) {
+
+  }
+  OpenModal() {
+    // this.pricingModalOpen = !this.pricingModalOpen;
+
+  }
+  setModalContent(content: any) {
+    console.log({ content });
+
+    this.modalContent = content
+    this.currentmodal = this.modalService.open(content, { size: "xl", backdrop: 'static', keyboard: false });
+    this.currentmodal.result.then((res:any)=>{
+      console.log("sdsssssdsssssssssssssssss");
+      this.compareModalOpen = false
+      
+    }).catch((e:any)=>{
+      console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      this.compareModalOpen = false
+      
+    })
+
+  }
+  setCompareModalContent(content: any) {
+    console.log({ content });
+
+    this.modalContent = content
+    this.currentmodal = this.modalService.open(content, { size: "xl", backdrop: 'static', keyboard: false });
+    this.currentmodal.result.then((res:any)=>{
+      console.log("sdsssssdsssssssssssssssss");
+      this.pricingModalOpen = false
+      
+    }).catch((e:any)=>{
+      console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      this.pricingModalOpen = false
+      
+    })
+
   }
 
 
 
-  updateVehicle(id: any) {
-    return this.http.get(`${environment.URL}/Pricing/Vehicles/Update?id=${id}`);
-  }
 
-  saveVehicle(data: any, id: any) {
-    return this.http.post(
-      `${environment.URL}/Pricing/Vehicles/Update/save/${id}`,
-      data
-    );
-  }
-  getCountry() {
-    return this.http.get(`${environment.URL}/Country`);
-  }
+
 
   getAllCarpet() {
     const headers = new HttpHeaders({
@@ -38,7 +98,7 @@ export class PricingService {
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
 
-    return this.http.get(`${environment.URL}/carpets`);
+    return this.http.get(`${environment.URL}/collection/getAll`);
 
   }
 
@@ -47,15 +107,53 @@ export class PricingService {
       'Content-Type': 'multipart/form-data',
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
-    return this.http.post(`${environment.URL}/test`, data);
+    return this.http.post(`${environment.URL}/image/search`, data);
 
   }
-  add(data: any) {
+  compare(data: any) {
     const headers = new HttpHeaders({
-      // 'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
       "Referrer-Policy": "strict-origin-when-cross-origin"
     });
-    return this.http.post(`${environment.URL}/add_carpet`, data, { headers });
+    return this.http.post(`${environment.URL}/image/compare`, data);
+
+  }
+  add(data: any,header:any = { }) {
+    const headers = new HttpHeaders({
+      // 'Content-Type': 'application/json',
+      // 'Content-Type': "application/x-www-form-urlencoded",
+      // 'Content-Type': 'multipart/form-data',
+      // ...header,
+    
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+    return this.http.post(`${environment.URL}/image/add`, data, { headers  });
+
+
+  }
+  addWithUrl(data: any) {
+    const headers = new HttpHeaders({
+      // 'Content-Type': 'application/json',
+      // 'Content-Type': "application/x-www-form-urlencoded",
+            // 'Content-Type': 'multipart/form-data',
+
+
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+    return this.http.post(`${environment.URL}/image/add/url`, data, { headers });
+
+
+  }
+  addInCloud(url:string,data: any) {
+    const headers = new HttpHeaders({
+      // 'Content-Type': 'application/json',
+      // 'Content-Type': "application/x-www-form-urlencoded",
+            // 'Content-Type': 'multipart/form-data',
+
+
+      // "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+    return this.http.put(`${url}/image/add/url`, data, { headers });
 
 
   }
@@ -63,9 +161,9 @@ export class PricingService {
     const headers = new HttpHeaders({
       "Referrer-Policy": "strict-origin-when-cross-origin",
       // 'Content-Type': 'multipart/form-data',
-      "Accept":"*/*"
+      "Accept": "*/*"
     });
-    this.http.put(`${url}`, data,{headers}).subscribe({
+    this.http.put(`${url}`, data, { headers }).subscribe({
       next: (data: any) => {
         console.log("uploaded");
 
@@ -75,7 +173,11 @@ export class PricingService {
       }
     })
   }
-  
+  addPayment(data:any){
+    return this.http.post(`${environment.URL}/payment/add`, data);
+
+  }
+
   get_put_url(data: any) {
     const headers = new HttpHeaders({
       "Referrer-Policy": "strict-origin-when-cross-origin",
@@ -83,20 +185,52 @@ export class PricingService {
     return this.http.post(`${environment.URL}/put_presigned_url`, data, { headers });
   }
 
-  get_collections(data:any){
-    return this.http.post(`${environment.URL}/collections`, data, );
+  get_collections() {
+    return this.http.get(`${environment.URL}/collection/getAll`);
 
   }
-  add_collections(data:any){
-    return this.http.post(`${environment.URL}/collections/create`, data );
+  add_collections(data: any) {
+    return this.http.post(`${environment.URL}/collection/create`, data);
 
   }
-  get_collection_details(data:any){
-    return this.http.post(`${environment.URL}/collections/details` ,data);
+  get_collection_details(data: any) {
+    return this.http.post(`${environment.URL}/collection/get`, data);
 
   }
-  download_image(data:any){
-    return this.http.post(`${environment.URL}/get_presigned_url` ,data);
+  download_image(data: any) {
+    return this.http.post(`${environment.URL}/image/getPreSignedUrl`, data);
+  }
+
+  setUserDetail(){
+
+    this.get_user_data().subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.loginSevice.userData = data.user
+        if(data.user.membership === 400){
+          this.pricingModalOpen = true
+        }
+        
+      }, error: (error) => {
+        
+        console.log(error);
+        
+      }
+    })
+  }
+  get_user_data() {
+    const headers = new HttpHeaders({
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    });
+
+    return this.http.get(`${environment.URL}/user/get`, {
+      headers: new HttpHeaders({ Authorization: localStorage.getItem("Token") || "" }),
+    });
+
+  }
+  makePayment(data: any) {
+    return this.http.post(`${environment.URL}/user/payment`, data);
+
   }
 
 }

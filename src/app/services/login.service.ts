@@ -9,7 +9,6 @@ import { Router } from "@angular/router";
 // import { AES } from "crypto-js";
 // import { CookieService } from "ngx-cookie-service";
 // import * as CryptoJS from "crypto-js";
-// import { ToastrService } from "ngx-toastr";
 import { environment } from "src/environments/environment";
 
 // import { Post } from './post.model';
@@ -22,12 +21,18 @@ export class PostsService {
 
     error = new Subject<string>();
 
+
+    
     constructor(
         private http: HttpClient,
         private router: Router,
         // private cookieService: CookieService,
-        // private toster: ToastrService
-    ) { }
+    ) {
+
+    
+        
+
+     }
     logginToken: any = false;
 
     createAndStorePost(data: any) {
@@ -38,6 +43,9 @@ export class PostsService {
         };
 
         return this.http.post(`${environment.URL}/login`, Data);
+    }
+    updateCollection(data:any){
+        return this.http.post(`${environment.URL}/collection/update`, data);
     }
 
     logOut() {
@@ -50,29 +58,30 @@ export class PostsService {
         // const duser = localStorage.removeItem("User");
 
         this.router.navigate(["./login"]);
-        this.http.post(`${environment.URL}/logout`, { token}).subscribe({
-            next: (data: any) => {
-                // this.toster.success(data.msg)
-                localStorage.setItem("newToken", '');
-                localStorage.setItem("User", '');
-                this.userData = ''
-            }, error: (error) => {
-                console.log(error);
-                // this.toster.error(error.error.msg)
-            }
-        });
+        // this.http.post(`${environment.URL}/logout`, { token}).subscribe({
+        //     next: (data: any) => {
+        //         // this.toster.success(data.msg)
+        //         localStorage.setItem("newToken", '');
+        //         localStorage.setItem("User", '');
+        //         this.userData = ''
+        //     }, error: (error) => {
+        //         console.log(error);
+        //         // this.toster.error(error.error.msg)
+        //     }
+        // });
 
     }
 
     login(data: any) {
         const Data: any = { email: data.email, password: data.password };
 
-        return this.http.post(`${environment.URL}/login`, Data);
+        return this.http.post(`${environment.URL}/user/login`, Data);
     }
+
     signUp(data: any) {
         const Data: any = { email: data.email, password: data.password };
 
-        return this.http.post(`${environment.URL}/signup`, Data);
+        return this.http.post(`${environment.URL}/user/signUp`, Data);
     }
     //   autoLogout() {
     //     let encryptedData = this.cookieService.get("myEncryptedData");
@@ -94,37 +103,59 @@ export class PostsService {
     //   }
 
     isAuthenticated() {
-        const promise = new Promise((resolve, reject) => {
+        // const promise = new Promise((resolve, reject) => {
             const token = localStorage.getItem("Token") || "";
-            if (!token) this.logOut();
-            this.http
-                .get(`${environment.URL}/auth`, {
-                    headers: new HttpHeaders({ Authorization: token }),
-                })
-                .subscribe({
-                    next: (data: any) => {
-                        if (data.status == true) {
-                            this.logginToken = true;
-                            resolve(true)
-                        } else {
-                            resolve(false)
-                        }
-                    },
-                    error: (error) => {
-                        console.log(error);
-                        this.logginToken = false;
-                        this.logOut();
-                    },
-                });
+            if (!token){
+
+                this.logOut();
+                return false
+            } 
+            return true
+            // this.http
+            //     .get(`${environment.URL}/auth`, {
+            //         headers: new HttpHeaders({ Authorization: token }),
+            //     })
+            //     .subscribe({
+            //         next: (data: any) => {
+            //             if (data.status == true) {
+            //                 this.logginToken = true;
+            //                 resolve(true)
+            //             } else {
+            //                 resolve(false)
+            //             }
+            //         },
+            //         error: (error) => {
+            //             console.log(error);
+            //             this.logginToken = false;
+            //             this.logOut();
+            //         },
+            //     });
 
             //   (data)=>{
 
             // })
 
             //   resolve(this.logginToken);
-        });
-        return promise;
+        // });
+        // return promise;
     }   
 
+    forgot_password(data:any){
+        const headers = new HttpHeaders({
+            // 'Content-Type': 'application/json',
+            // 'Content-Type': "application/x-www-form-urlencoded",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          });
+        return this.http.post(`${environment.URL}/forgot_password`, data,{headers});
+    }
+
+    resetPassword(data:any){
+        const headers = new HttpHeaders({
+            // 'Content-Type': 'application/json',
+            // 'Content-Type': "application/x-www-form-urlencoded",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          });
+        return this.http.post(`${environment.URL}/reset_password`, data);
+    }
 
 }

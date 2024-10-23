@@ -14,9 +14,19 @@ import { RouterModule } from '@angular/router';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AuthInterceptorInterceptor } from './services/interceptor/auth-interceptor.interceptor';
 // 
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+import { ToastrModule } from 'ngx-toastr';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+const config: SocketIoConfig = { url: environment.Socket, options: {
+  transports: ['websocket', 'polling']
+}  };
 @NgModule({
   declarations: [
     AppComponent,
+    
    
   ],
   imports: [
@@ -34,7 +44,15 @@ import { AuthInterceptorInterceptor } from './services/interceptor/auth-intercep
     ReactiveFormsModule,
     MdbCarouselModule,
     NgxFileDropModule,
-    ReactiveFormsModule
+    ToastrModule.forRoot({
+      timeOut: 3000, // Example of configuring ToastrModule
+      positionClass: '*',
+      preventDuplicates: true,
+    }),
+    ReactiveFormsModule,
+    SocketIoModule.forRoot(config),
+
+
     
   ],
   providers: [{provide:HTTP_INTERCEPTORS,        useClass:AuthInterceptorInterceptor,

@@ -1,0 +1,59 @@
+<!-- 
+
+<ng-template #content let-modal >
+    <div class="modal-header p-3  d-flex justify-content-between ">
+      <h4></h4>
+      <span type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span class="h5" aria-hidden="true">&times;</span>
+      </span>
+    </div>
+
+    <div class="modal-body p-3 pricing position-relative">
+      
+      <div>
+        <img [src]="pricingService.compareObj.compareImgUrl" alt="img">
+      </div>
+      <button (click)="onCompare()" class="btn btn-primary">Compare</button>
+  
+    </div>
+
+</ng-template> -->
+
+<ng-template #content let-modal>
+  <div class="modal-header p-3 d-flex justify-content-between">
+    <h4>Image Comparison</h4>
+    <span type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span class="h5" aria-hidden="true">&times;</span>
+    </span>
+  </div>
+
+  <div class="modal-body p-3 pricing position-relative">
+    <div style="position: relative;" #mod  >
+      <!-- Compared image -->
+      <img 
+      *ngIf="!pricingService.compareObj.isCompare" 
+        [src]="pricingService.compareObj.compareImgUrl" 
+        alt="Compared Image" 
+        class="img-fluid"
+        #comparedImage 
+        (load)="setImageWidth(comparedImage,mod)"
+
+      >
+
+      <!-- Source image overlay -->
+      <img 
+        *ngIf="pricingService.compareObj.isCompare" 
+        [src]="pricingService.compareObj.sourceImgUrl" 
+        [style.position]="'absolute'"
+        [style.top.px]="pricingService.compareObj.top_left[1]" 
+        [style.left.px]="pricingService.compareObj.top_left[0]" 
+        [style.width.px]="pricingService.compareObj.width" 
+        [style.height.px]="pricingService.compareObj.height" 
+        alt="Source Image Overlay"
+        class="img-fluid"
+      >
+    </div>
+
+    <button (click)="onCompare()" class="btn btn-primary mt-3">Compare</button>
+  </div>
+</ng-template>

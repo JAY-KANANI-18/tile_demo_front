@@ -39,7 +39,7 @@
         <input class="form__input mt-3" type="text" id="email" placeholder="Email" formControlName="email">
         <input class="form__input mt-3" type="password" id="password" placeholder="Password" formControlName="password">
         <div *ngIf="error1" class="error">*{{error1}} </div>
-        <a class="form__link">Forgot your password?</a>
+        <a class="form__link" [routerLink]="'/forgot-password'">Forgot your password?</a>
         <button class="form__button button submit prime-color" (click)="login()" type="submit">SIGN IN</button>
       </form>
     </div>

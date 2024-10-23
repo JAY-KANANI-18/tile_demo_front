@@ -1,0 +1,27 @@
+
+
+<ng-template #content let-modal >
+  <!-- <div class="bg-aliceblue modal-div "> -->
+    <div class="modal-header p-3  d-flex justify-content-between " *ngIf="loginService?.userData?.membership > 400">
+      <h4></h4>
+      <span type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span class="h5" aria-hidden="true">&times;</span>
+      </span>
+    </div>
+
+    <div class="modal-body p-3 pricing">
+      <div class="pricing">
+        <!-- <h1>{{ title }}</h1> -->
+        <div class="container">
+          <div class="pricing-grid">
+            <app-price-table *ngFor="let pricingBox of pricingBoxes" [pricingBox]="pricingBox"></app-price-table>
+          </div>
+        </div>
+      </div>
+
+
+  
+    </div>
+
+  <!-- </div>  -->
+</ng-template>

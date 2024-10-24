@@ -43,7 +43,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     
     request =  request.clone({
       headers: request.headers.set("token", localtoken),
-      withCredentials: true
+      // withCredentials: true
     });
     console.log({request});
     

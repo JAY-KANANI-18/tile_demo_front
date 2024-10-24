@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   // URL : 'http://65.1.238.129',
-  // URL : 'http://194.238.26.214:5000',    
-  URL : 'https://jaykanani.in',    
+  URL : 'http://194.238.26.214:5000',    
+  // URL : 'https://jaykanani.in',    
   // URL : 'http://127.0.0.1:5000',    
   // URL : 'https://imgstockhub.in',
   // Socket : 'ws://127.0.0.1:8000',
-  // Socket : 'http://194.238.26.214:5000',
-  Socket : 'https://jaykanani.in',
+  Socket : 'http://194.238.26.214:5000',
+  // Socket : 'https://jaykanani.in',
   // Socket : 'http://127.0.0.1:5000',
   // Socket : 'wss://imgstockhub.in',
   stripe: {
